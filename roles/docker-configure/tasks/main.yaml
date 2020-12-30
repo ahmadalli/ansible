@@ -22,6 +22,11 @@
 - name: systemd configs
   when: docker_systemd_unit_env | default([], True) | length > 0
   block:
+    - name: delete old overrides
+      when: docker_systemd_unit_manage_overrides
+      file:
+        path: "{{ docker_systemd_unit_overrides_directory }}"
+        state: absent
     - name: make sure systemd directory is created
       file:
         path: "{{ docker_systemd_unit_overrides_directory }}"

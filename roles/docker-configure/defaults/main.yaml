@@ -8,5 +8,6 @@ docker_daemon_configs_log_opts: {}
 
 docker_systemd_unit_overrides_directory: /etc/systemd/system/docker.service.d
 docker_systemd_unit_overrides_file: "{{ docker_systemd_unit_overrides_directory }}/ahmadalli-ansible-overrides.conf"
+docker_systemd_unit_manage_overrides: false
 # each element should contain bash-style env definition e.g. key=value
 docker_systemd_unit_env: []
