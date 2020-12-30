@@ -37,3 +37,9 @@
         dest: "{{ docker_systemd_unit_overrides_file }}"
         mode: "0644"
       notify: restart docker
+    - name: add ansible-managed file to directory
+      when: docker_systemd_unit_manage_overrides
+      copy:
+        dest: "{{ docker_systemd_unit_overrides_directory }}/ansible-managed"
+        content: |
+          this directory is managed by ahmadalli.ansible.docker-configure role
