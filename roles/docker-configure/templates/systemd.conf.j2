@@ -1,0 +1,4 @@
+[Service]
+{% for env in docker_systemd_unit_env %}
+Environment={{ env }}
+{% endfor %}

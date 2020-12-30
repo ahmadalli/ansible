@@ -19,3 +19,16 @@
     dest: /etc/docker/daemon.json
     content: "{{ __docker_daemon_configs | to_json }}"
   notify: restart docker
+- name: systemd configs
+  when: docker_systemd_unit_env | default([], True) | length > 0
+  block:
+    - name: make sure systemd directory is created
+      file:
+        path: "{{ docker_systemd_unit_overrides_directory }}"
+        state: directory
+    - name: docker systemd env
+      template:
+        src: containers.conf.j2
+        dest: "{{ docker_systemd_unit_overrides_file }}"
+        mode: "0644"
+      notify: restart docker
