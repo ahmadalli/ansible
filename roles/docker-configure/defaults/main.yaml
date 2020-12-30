@@ -1,0 +1,7 @@
+docker_registry_mirrors: []
+docker_insecure_registries: []
+docker_ip: 0.0.0.0
+docker_iptables: true
+docker_dns: []
+docker_log_driver:
+docker_log_opts: {}

@@ -1,0 +1,13 @@
+namespace: ahmadalli
+name: ansible
+version: "0.0.1"
+readme: "readme.md"
+authors:
+  - Ahmadali Shafiee (https://ahmadalli.rocks) <mail@ahmadalli.net>
+license:
+  - "MIT"
+tags:
+  - collection
+  - containers
+  - podman
+repository: https://github.com/ahmadalli/ansible

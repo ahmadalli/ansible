@@ -1,0 +1,12 @@
+- name: make sure podman configs directory exists
+  tags:
+    - podman-configs
+  file:
+    path: /etc/containers/
+    state: directory
+    mode: '0755'
+- name: update podman configs
+  template:
+    src: containers.conf.j2
+    dest: /etc/containers/containers.toml.conf
+    mode: '0644'
