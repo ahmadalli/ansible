@@ -1,7 +1,7 @@
-docker_registry_mirrors: []
-docker_insecure_registries: []
-docker_ip: 0.0.0.0
-docker_iptables: true
-docker_dns: []
-docker_log_driver:
-docker_log_opts: {}
+docker_daemon_configs_registry_mirrors: []
+docker_daemon_configs_insecure_registries: []
+docker_daemon_configs_ip: 0.0.0.0
+docker_daemon_configs_iptables: true
+docker_daemon_configs_dns: []
+docker_daemon_configs_log_driver:
+docker_daemon_configs_log_opts: {}

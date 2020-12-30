@@ -2,13 +2,13 @@
   set_fact:
     key_value: dummy # just to make the error go away
     __docker_daemon_configs:
-      registry-mirrors: "{{ docker_registry_mirrors | default([], True) }}"
-      insecure-registries: "{{ docker_insecure_registries | default([], True) }}"
-      ip: "{{ docker_ip | default('0.0.0.0', True) }}"
-      iptables: "{{ docker_iptables | default('true') | bool }}"
-      dns: "{{ docker_dns | default([], True) }}"
-      log-driver: "{{ docker_log_driver | default('json-file') }}"
-      log-opts: "{{ docker_log_opts | default({}, True) }}"
+      registry-mirrors: "{{ docker_daemon_configs_registry_mirrors | default([], True) }}"
+      insecure-registries: "{{ docker_daemon_configs_insecure_registries | default([], True) }}"
+      ip: "{{ docker_daemon_configs_ip | default('0.0.0.0', True) }}"
+      iptables: "{{ docker_daemon_configs_iptables | default('true') | bool }}"
+      dns: "{{ docker_daemon_configs_dns | default([], True) }}"
+      log-driver: "{{ docker_daemon_configs_log_driver | default('json-file') }}"
+      log-opts: "{{ docker_daemon_configs_log_opts | default({}, True) }}"
 - name: create docker configs directory
   file:
     path: /etc/docker
