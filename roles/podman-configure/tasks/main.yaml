@@ -8,5 +8,5 @@
 - name: update podman configs
   template:
     src: containers.conf.j2
-    dest: /etc/containers/containers.toml.conf
+    dest: /etc/containers/containers.conf
     mode: '0644'
