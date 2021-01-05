@@ -18,7 +18,7 @@ _package_info:
   packages: >
     [ {% for package in opennebula_frontend_packages %}
       {
-        'name':'package'
+        'name':'{{ package }}'
       }
       {% if not loop.last %},{% endif %}
       {% endfor %}
