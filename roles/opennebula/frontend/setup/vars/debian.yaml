@@ -1,14 +1,14 @@
 opennebula_repo_base_url: https://downloads.opennebula.io/repo/5.12/{{ ansible_distribution }}/{{ ansible_distribution_version }}
 
 _package_repo_info:
-  ansible_module: apt_repository
+  ansible_module: ansible.builtin.apt_repository
   repos:
     - >
       deb {{ opennebula_repo_base_url }}
       stable opennebula
 
 _package_info:
-  ansible_module: apt
+  ansible_module: ansible.builtin.apt
   packages: >
             [ {% for package in opennebula_frontend_packages %}
               {
