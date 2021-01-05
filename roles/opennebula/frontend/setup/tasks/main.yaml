@@ -2,8 +2,8 @@
 - name: gather os specific variables
   ansible.builtin.include_vars: "{{ item }}"
   with_first_found:
-    - "{{ ansible_distribution }}.yaml"
-    - "{{ ansible_os_family }}.yaml"
+    - "{{ ansible_distribution|lower }}.yaml"
+    - "{{ ansible_os_family|lower }}.yaml"
     - default.yaml
   tags:
     - facts
