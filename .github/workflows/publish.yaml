@@ -8,8 +8,9 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: get the version from the tag
-        run: echo ::set-env name=RELEASE_VERSION::${GITHUB_REF##*/}
+        id: get_version
+        run: echo ::set-env name=VERSION::${GITHUB_REF/refs\/tags\//}
       - uses: artis3n/ansible_galaxy_collection@v2
         with:
           api_key: '${{ secrets.GALAXY_API_KEY }}'
-          galaxy_version: '${{ env.RELEASE_VERSION }}'
+          galaxy_version: '${{ steps.get_version.outputs.VERSION }}'
