@@ -9,5 +9,5 @@
     - facts
 
 - name: install opennebula frontend packages
-  include_role:
+  ansible.builtin.include_role:
     name: utils/os/package-manager
