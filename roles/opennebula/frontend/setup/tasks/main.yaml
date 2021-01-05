@@ -10,6 +10,7 @@
   tags:
     - facts
   ignore_errors: yes
+  no_log: yes
 
 - name: install opennebula frontend packages
   include_role:
