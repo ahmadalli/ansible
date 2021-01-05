@@ -1,9 +1,0 @@
-podman_containers_configs:
-  containers:
-    log_driver:
-    log_size_max:
-    http_proxy: true
-  engine:
-    # each element should contain bash-style env definition e.g. key=value
-    env: []
-    runtime: crun
