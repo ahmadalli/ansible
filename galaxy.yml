@@ -10,4 +10,6 @@ tags:
   - collection
   - containers
   - podman
+  - docker
+  - opennebula
 repository: https://github.com/ahmadalli/ansible
