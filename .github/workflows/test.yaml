@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Lint Ansible Playbook
+      - name: lint collection
         uses: ansible/ansible-lint-action@master
         with:
           override-deps: |
