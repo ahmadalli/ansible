@@ -53,3 +53,6 @@
         dest: "{{ docker_systemd_unit_overrides_directory }}/ansible-managed"
         content: |
           this directory is managed by ahmadalli.ansible.docker-configure role
+        owner: root
+        group: root
+        mode: "0644"
