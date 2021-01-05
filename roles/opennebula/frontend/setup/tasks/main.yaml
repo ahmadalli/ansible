@@ -14,4 +14,4 @@
 
 - name: install opennebula frontend packages
   include_role:
-    name: ahmadalli.ansible.utils/os/package-manager
+    name: utils/os/package-manager
