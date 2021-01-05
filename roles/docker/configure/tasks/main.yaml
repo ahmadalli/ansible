@@ -13,11 +13,16 @@
   file:
     path: /etc/docker
     state: directory
+    owner: root
+    group: root
     mode: "0755"
 - name: docker configs
   copy:
     dest: /etc/docker/daemon.json
     content: "{{ __docker_daemon_configs | to_json }}"
+    owner: root
+    group: root
+    mode: "0644"
   notify: restart docker
 - name: systemd configs
   when: docker_systemd_unit_env | default([], True) | length > 0
@@ -31,10 +36,15 @@
       file:
         path: "{{ docker_systemd_unit_overrides_directory }}"
         state: directory
+        owner: root
+        group: root
+        mode: "0644"
     - name: docker systemd env
       template:
         src: systemd.conf.j2
         dest: "{{ docker_systemd_unit_overrides_file }}"
+        owner: root
+        group: root
         mode: "0644"
       notify: restart docker
     - name: add ansible-managed file to directory
