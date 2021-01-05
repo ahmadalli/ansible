@@ -1,3 +1,11 @@
+- name: ensure repository public key is installed
+  action: "{{ _package_repo_key_info.ansible_module }}"
+  args:
+    id: "{{ item.id | default(omit) }}"
+    url: "{{ item.url }}"
+    state: present
+  with_items: "{{ _package_repo_key_info.repo_keys }}"
+
 - name: ensure repository is enabled
   action: "{{ _package_repo_info.ansible_module }}"
   args:
