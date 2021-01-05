@@ -10,10 +10,10 @@ _package_repo_info:
 _package_info:
   ansible_module: ansible.builtin.apt
   packages: >
-            [ {% for package in opennebula_frontend_packages %}
-              {
-                'name':'package'
-              }
-              {% if not loop.last %},{% endif %}
-              {% endfor %}
-            ]
+    [ {% for package in opennebula_frontend_packages %}
+      {
+        'name':'package'
+      }
+      {% if not loop.last %},{% endif %}
+      {% endfor %}
+    ]
