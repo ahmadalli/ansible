@@ -1,9 +1,7 @@
 name: publish collection
 on:
-  release:
-    types:
-      - published
-      - edited
+  create:
+    tags:
 jobs:
   deploy:
     runs-on: ubuntu-latest
