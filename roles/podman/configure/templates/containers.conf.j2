@@ -1,5 +1,5 @@
 # Ansible Managed
-# checkout https://github.com/containers/common/blob/v0.31.0/pkg/config/containers.conf for all available options
+# checkout /usr/share/containers/containers.conf or https://github.com/containers/common/blob/v0.31.0/pkg/config/containers.conf for all available options
 
 [containers]
 # Default proxy environment variables passed into the container.
@@ -9,12 +9,12 @@
 # should not use proxy. Proxy environment variables specified for the container
 # in any other way will override the values passed from the host.
 #
-http_proxy = {{ 'true' if podman_containers_configs.containers.http_proxy | default('true') | bool else 'false' }}
+http_proxy = {{ 'true' if podman_containers_configs.containers_http_proxy | default('true') | bool else 'false' }}
 
 # Logging driver for the container. Available options: k8s-file and journald.
 #
-{% if podman_containers_configs.containers.log_driver | default("", True) | length > 0 %}
-log_driver = "{{ podman_containers_configs.containers.log_driver }}"
+{% if podman_containers_configs.containers_log_driver | default("", True) | length > 0 %}
+log_driver = "{{ podman_containers_configs.containers_log_driver }}"
 {% else %}
 # log_driver = "k8s-file"
 {% endif %}
@@ -24,8 +24,8 @@ log_driver = "{{ podman_containers_configs.containers.log_driver }}"
 # exceed conmon's read buffer. The file is truncated and re-opened so the
 # limit is never exceeded.
 #
-{% if podman_containers_configs.containers.log_size_max | default(-1, True) != -1 %}
-log_size_max = {{ podman_containers_configs.containers.log_size_max }}
+{% if podman_containers_configs.containers_log_size_max | default(-1, True) != -1 %}
+log_size_max = {{ podman_containers_configs.containers_log_size_max }}
 {% else %}
 # log_size_max = -1
 {% endif %}
@@ -35,9 +35,9 @@ log_size_max = {{ podman_containers_configs.containers.log_size_max }}
 # For example "http_proxy=internal.proxy.company.com".
 # Note these environment variables will not be used within the container.
 # Set the env section under [containers] table, if you want to set environment variables for the container.
-{% if podman_containers_configs.engine.env | default([], True) | length > 0 %}
+{% if podman_containers_configs.engine_env | default([], True) | length > 0 %}
 env = [
-{% for env in podman_containers_configs.engine.env %}
+{% for env in podman_containers_configs.engine_env %}
         "{{ env }}",
 {% endfor %}
       ]
@@ -47,8 +47,8 @@ env = [
 
 # Default OCI runtime
 #
-{% if podman_containers_configs.engine.runtime | default("", True) | length > 0 %}
-runtime = "{{ podman_containers_configs.engine.runtime }}"
+{% if podman_containers_configs.engine_runtime | default("", True) | length > 0 %}
+runtime = "{{ podman_containers_configs.engine_runtime }}"
 {% else %}
 # runtime = "crun"
 {% endif %}
