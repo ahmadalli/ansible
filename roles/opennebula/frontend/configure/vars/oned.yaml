@@ -1,0 +1,12 @@
+opennebula_frontend_oned_configs_database:
+  sqlite:
+    BACKEND: "{{ opennebula_frontend_oned_configs_database_backend }}"
+    TIMEOUT: "{{ opennebula_frontend_oned_configs_database_sqlite_timeout }}"
+  mysql:
+    SERVER: "{{ opennebula_frontend_oned_configs_database_mysql_server }}"
+    PORT: "{{ opennebula_frontend_oned_configs_database_mysql_port }}"
+    USER: "{{ opennebula_frontend_oned_configs_database_mysql_user }}"
+    PASSWD: "{{ opennebula_frontend_oned_configs_database_mysql_passwd }}"
+    DB_NAME: "{{ opennebula_frontend_oned_configs_database_mysql_db_name }}"
+    CONNECTIONS: "{{ opennebula_frontend_oned_configs_database_mysql_connections }}"
+    COMPARE_BINARY: "{{ opennebula_frontend_oned_configs_database_mysql_compare_binary }}"

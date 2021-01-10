@@ -1,0 +1,25 @@
+opennebula_frontend_version: "5.12"
+
+# this can be sqlite or mysql
+opennebula_frontend_oned_configs_database_backend: sqlite
+
+opennebula_frontend_oned_configs_database_sqlite_timeout: 2500
+
+opennebula_frontend_oned_configs_database_mysql_server:
+opennebula_frontend_oned_configs_database_mysql_port:
+opennebula_frontend_oned_configs_database_mysql_user:
+opennebula_frontend_oned_configs_database_mysql_passwd:
+opennebula_frontend_oned_configs_database_mysql_db_name:
+opennebula_frontend_oned_configs_database_mysql_connections: 25
+opennebula_frontend_oned_configs_database_mysql_compare_binary: "no"
+
+# this can be no, yes, only. For yes and only, provide path to
+# cert and key. "yes" means both ws and wss connections will be
+# supported.
+opennebula_sunstone_server_configs_vnc_proxy_support_wss: "no"
+opennebula_sunstone_server_configs_vnc_proxy_cert:
+opennebula_sunstone_server_configs_vnc_proxy_key:
+
+opennebula_one_vmm_exec_kvm_config_nic_model:
+opennebula_one_vmm_exec_kvm_config_nic_filter:
+opennebula_one_vmm_exec_kvm_config_nic_override: "{{ opennebula_one_vmm_exec_kvm_config_nic_model | default('', True) | length > 0 or opennebula_one_vmm_exec_kvm_config_nic_filter | default('', True) | length > 0 }}"

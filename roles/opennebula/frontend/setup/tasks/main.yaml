@@ -1,4 +1,7 @@
 ---
+- name: install mysql
+  include_role:
+    name: geerlingguy.mysql
 - name: gather os specific variables
   ansible.builtin.include_vars: "{{ item }}"
   with_first_found:
@@ -7,7 +10,9 @@
     - default.yaml
   tags:
     - facts
-
 - name: install opennebula frontend packages
   ansible.builtin.include_role:
     name: utils/os/package/manager
+- name: configure opennebula
+  include_role:
+    name: opennebula/frontend/configure

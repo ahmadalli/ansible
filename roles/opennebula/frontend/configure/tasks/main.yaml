@@ -1,0 +1,26 @@
+---
+- name: include oned config variables
+  ansible.builtin.include_vars: oned.yaml
+- name: update oned configs
+  ansible.builtin.template:
+    src: oned-{{ opennebula_frontend_version }}.conf.j2
+    dest: /etc/one/oned.conf
+    mode: '0640'
+    owner: root
+    group: oneadmin
+- name: update sunstone server configs
+  ansible.builtin.template:
+    src: sunstone-server-{{ opennebula_frontend_version }}.conf.j2
+    dest: /etc/one/sunstone-server.conf
+    mode: '0640'
+    owner: root
+    group: oneadmin
+- name: include oned kvm override variables
+  ansible.builtin.include_vars: vmm_exec_kvm.yaml
+- name: update kvm override configs
+  ansible.builtin.template:
+    src: vmm_exec_kvm-{{ opennebula_frontend_version }}.conf.j2
+    dest: /etc/one/vmm_exec/vmm_exec_kvm.conf
+    mode: '0640'
+    owner: root
+    group: oneadmin
