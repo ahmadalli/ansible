@@ -1,0 +1,24 @@
+### MySQL Configs ###
+# checkout https://github.com/geerlingguy/ansible-role-mysql/blob/master/defaults/main.yml
+# for the list of available configs
+
+# root access
+mysql_root_password: changeme
+mysql_root_password_update: true
+
+mysql_bind_address: "0.0.0.0"
+mysql_port: "3306"
+
+mysql_databases:
+  - name: opennebula
+    collation: utf8_general_ci
+    encoding: utf8
+
+mysql_users:
+  - name: opennebula
+    host: 127.0.0.1
+    password: changeme
+    priv: "{{ mysql_databases[0].name }}.*:ALL,GRANT"
+
+mysql_max_connections: "32"
+mysql_skip_name_resolve: true
