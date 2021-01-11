@@ -9,6 +9,7 @@
 - name: install gluster server package
   ansible.builtin.include_role:
     name: utils/os/package/manager
+- name: bash-completion
   get_url:
     url: https://raw.githubusercontent.com/gluster/glusterfs/master/extras/command-completion/gluster.bash
     dest: /etc/bash_completion.d/gluster
