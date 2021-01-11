@@ -11,7 +11,7 @@
     name: utils/os/package/manager
 - name: bash-completion
   get_url:
-    url: https://raw.githubusercontent.com/gluster/glusterfs/master/extras/command-completion/gluster.bash
+    url: https://raw.githubusercontent.com/gluster/glusterfs/release-{{ glusterfs_ppa_version }}/extras/command-completion/gluster.bash
     dest: /etc/bash_completion.d/gluster
     mode: "0755"
 - name: populate gluster server hosts
