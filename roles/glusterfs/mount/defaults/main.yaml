@@ -1,3 +1,5 @@
+glusterfs_ppa_version: latest
+
 glusterfs_mounts: []
   # - hosts: [] # name of inventory node names or groups
   #   volume:
