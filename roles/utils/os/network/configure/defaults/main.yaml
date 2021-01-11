@@ -1,12 +1,12 @@
 os_network_manager: "{{ 'netplan' if ansible_distribution_version is version('17.10', '>=') else 'ifupdown' }}"
 
-network_links:
-  - interface:
-    bridge:
-      name:
-      parameters:
-        stp:
-        forward_delay:
-    addresses: []
-    gateway:
-    nameservers: []
+network_links: []
+  # - interface:
+  #   bridge:
+  #     name:
+  #     parameters:
+  #       stp:
+  #       forward_delay:
+  #   addresses: []
+  #   gateway:
+  #   nameservers: []
