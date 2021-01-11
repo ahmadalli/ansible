@@ -4,14 +4,14 @@
     id: "{{ item.id | default(omit) }}"
     url: "{{ item.url }}"
     state: present
-  with_items: "{{ _package_repo_key_info.repo_keys }}"
+  loop: "{{ _package_repo_key_info.repo_keys | default([], True) }}"
 
 - name: ensure repository is enabled
   action: "{{ _package_repo_info.ansible_module }}"
   args:
     repo: "{{ item }}"
     state: present
-  loop: "{{ _package_repo_info.repos }}"
+  loop: "{{ _package_repo_info.repos | default([], True) }}"
 
 - name: ensure packages are installed
   action: "{{ _package_info.ansible_module }}"
@@ -22,4 +22,4 @@
     state: "{{ item.state | default('present') }}"
     update_cache: "{{ omit if ansible_distribution == 'Fedora' else True }}"
     enablerepo: "{{ item.repo | default(omit) }}"
-  with_items: "{{ _package_info.packages }}"
+  loop: "{{ _package_info.packages | default([], True) }}"
