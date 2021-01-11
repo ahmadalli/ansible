@@ -36,13 +36,13 @@
     recurse: yes
   loop: "{{ glusterfs_volumes }}"
 - name: setup volume
-  delegate_to: "{{ gluster_hosts[0] }}"
+  delegate_to: "{{ _cluster_hosts[0] }}"
   run_once: true
   block:
     - name: peer probe hosts
       gluster.gluster.gluster_peer:
         state: present
-        nodes: "{{ gluster_hosts | join(',') }}"
+        nodes: "{{ _cluster_hosts | join(',') }}"
     - name: setup volume
       ahmadalli.ansible.gluster_replicated_volume:
         name: "{{ item.name }}"
