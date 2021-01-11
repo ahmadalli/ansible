@@ -1,4 +1,4 @@
-glusterfs_ppa_version: latest
+glusterfs_ppa_version: 8
 
 glusterfs_cluster_hosts: []
 

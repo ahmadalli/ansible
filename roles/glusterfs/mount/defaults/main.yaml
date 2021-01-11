@@ -1,4 +1,4 @@
-glusterfs_ppa_version: latest
+glusterfs_ppa_version: 8
 
 glusterfs_mounts: []
   # - hosts: [] # name of inventory node names or groups
