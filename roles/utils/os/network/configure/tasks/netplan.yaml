@@ -20,6 +20,12 @@
     group: root
     mode: "0644"
 - name: test netplan configs
-  shell: netplan generate
+  command: netplan generate
+  register: netplan_generate
+  failed_when: netplan_generate.rc > 0
+  changed_when: netplan_generate == 0
 - name: apply configs
-  shell: netplan apply
+  command: netplan apply
+  register: netplan_apply
+  failed_when: netplan_apply.rc > 0
+  changed_when: netplan_apply == 0

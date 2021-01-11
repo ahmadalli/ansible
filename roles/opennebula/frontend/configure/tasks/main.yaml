@@ -57,7 +57,10 @@
     - opennebula
     - opennebula-sunstone
 - name: check if opennebula service is started
-  shell: oneuser show
+  command: oneuser show
+  register: oneuser_check
+  failed_when: oneuser_check.rc > 0
+  changed_when: false
 - name: get public key
   slurp:
     src: /var/lib/one/.ssh/id_rsa.pub
