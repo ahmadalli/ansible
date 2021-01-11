@@ -14,6 +14,11 @@
     url: https://raw.githubusercontent.com/gluster/glusterfs/release-{{ glusterfs_ppa_version }}/extras/command-completion/gluster.bash
     dest: /etc/bash_completion.d/gluster
     mode: "0755"
+- name: start glusterd service
+  ansible.builtin.systemd:
+    name: glusterd
+    enabled: true
+    state: started
 - name: populate gluster server hosts
   ansible.builtin.set_fact:
     _cluster_hosts: "{{ _cluster_hosts | default([], True) | union(query('inventory_hostnames', item)) }}"
