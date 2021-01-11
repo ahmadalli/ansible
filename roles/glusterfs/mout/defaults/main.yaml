@@ -1,9 +1,9 @@
-glusterfs_mounts:
-  - hosts: [] # name of inventory node names or groups
-    volume:
-    mount:
-      path:
-      path_force_create: # whether remove the path if it's not a directory or not
-      mode:
-      owner:
-      group:
+glusterfs_mounts: []
+  # - hosts: [] # name of inventory node names or groups
+  #   volume:
+  #   mount:
+  #     path:
+  #     path_force_create: # whether remove the path if it's not a directory or not
+  #     mode:
+  #     owner:
+  #     group:
