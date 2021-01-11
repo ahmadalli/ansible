@@ -16,7 +16,7 @@
     mode: "0755"
 - name: populate gluster server hosts
   ansible.builtin.set_fact:
-    _cluster_hosts: "{{ _cluster_hosts | default([], True) | union(query('inventory_hostnames', item.hosts)) }}"
+    _cluster_hosts: "{{ _cluster_hosts | default([], True) | union(query('inventory_hostnames', item)) }}"
   loop: "{{ glusterfs_cluster_hosts }}"
 - name: add cluster hosts to /etc/hosts
   ansible.builtin.blockinfile:
