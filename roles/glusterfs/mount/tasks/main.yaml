@@ -26,8 +26,9 @@
         path: "{{ item.mount.path }}"
       register: p
     - name: check if recreating path is possible
-      ansible.builtin.fail: |
-        the mount path {{ item.mount.path }} exists but it's not a directory. and path_force_create is not set to true
+      ansible.builtin.fail:
+        msg: |
+          the mount path {{ item.mount.path }} exists but it's not a directory. and path_force_create is not set to true
       when: p.stat.exists and not p.stat.isdir and not path_force_create
     - name: remove the contents of the path
       ansible.builtin.file:

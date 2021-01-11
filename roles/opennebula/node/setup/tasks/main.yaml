@@ -67,12 +67,14 @@
   block:
     - name: check if partition has filesystem
       when: lvm_info.partitions[0].fstype | length > 0
-      ansible.builtin.fail: |
-        the disk is already partitioned and {{ opennebula_datastore_lvm_device }}1 has filesystem
+      ansible.builtin.fail:
+        msg: |
+          the disk is already partitioned and {{ opennebula_datastore_lvm_device }}1 has filesystem
     - name: check if partition has lvm flag
       when: "'lvm' not in lvm_info.partitions[0].flags"
-      ansible.builtin.fail: |
-        the disk is already partitioned but {{ opennebula_datastore_lvm_device }}1 doesn't have lvm flag
+      ansible.builtin.fail:
+        msg: |
+          the disk is already partitioned but {{ opennebula_datastore_lvm_device }}1 doesn't have lvm flag
 - name: create lvm parition
   community.general.parted:
     device: "{{ opennebula_datastore_lvm_device | mandatory }}"
