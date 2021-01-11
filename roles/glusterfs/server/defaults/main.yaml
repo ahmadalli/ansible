@@ -1,8 +1,10 @@
 glusterfs_cluster_hosts: []
+
+# this array should contains items with this format:
+# - name:
+#   brick:
+#     path:
+#     mode:
+#     owner:
+#     group:
 glusterfs_volumes: []
-  # - name:
-  #   brick:
-  #     path:
-  #     mode:
-  #     owner:
-  #     group:
