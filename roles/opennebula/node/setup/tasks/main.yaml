@@ -38,13 +38,6 @@
 - name: setup glusterfs volume mount
   ansible.builtin.include_role:
     name: glusterfs/mount
-- name: ensure datastore directory exists in glusterfs volume
-  ansible.builtin.file:
-    path: "{{ opennebula_node_datastore_glusterfs_mount_path }}/datastores"
-    owner: oneadmin
-    group: oneadmin
-    state: directory
-  run_once: true
 - name: create datastore softlink
   ansible.builtin.file:
     src: "{{ opennebula_node_datastore_glusterfs_mount_path }}/datastores"

@@ -13,6 +13,23 @@
 - name: install opennebula frontend packages
   ansible.builtin.include_role:
     name: utils/os/package/manager
+- name: setup glusterfs volume mount
+  ansible.builtin.include_role:
+    name: glusterfs/mount
+- name: ensure datastore directory exists in glusterfs volume
+  ansible.builtin.file:
+    path: "{{ opennebula_node_datastore_glusterfs_mount_path }}/datastores"
+    owner: oneadmin
+    group: oneadmin
+    state: directory
+- name: create datastore softlink
+  ansible.builtin.file:
+    src: "{{ opennebula_node_datastore_glusterfs_mount_path }}/datastores"
+    dest: /var/lib/one/datastores
+    owner: oneadmin
+    group: oneadmin
+    follow: no
+    state: link
 - name: configure opennebula
   include_role:
     name: opennebula/frontend/configure
