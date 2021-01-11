@@ -1,5 +1,12 @@
 opennebula_frontend_version: "5.12"
 
+# if we add docker/podman support this is where we look
+opennebula_frontend_database_deploy_mode: apt
+opennebula_frontend_database_deploy_mode_systemd_unit:
+  apt: mysql.service
+  docker: docker.service
+opennebula_frontend_database_systemd_unit: "{{ opennebula_frontend_database_deploy_mode_systemd_unit[opennebula_frontend_database_deploy_mode] }}"
+
 # this can be sqlite or mysql
 opennebula_frontend_oned_configs_database_backend: sqlite
 
@@ -23,3 +30,5 @@ opennebula_sunstone_server_configs_vnc_proxy_key:
 opennebula_one_vmm_exec_kvm_config_nic_model:
 opennebula_one_vmm_exec_kvm_config_nic_filter:
 opennebula_one_vmm_exec_kvm_config_nic_override: "{{ opennebula_one_vmm_exec_kvm_config_nic_model | default('', True) | length > 0 or opennebula_one_vmm_exec_kvm_config_nic_filter | default('', True) | length > 0 }}"
+
+opennebula_frontend_systemd_unit_overrides_directory: /etc/systemd/system/opennebula.service.d/
