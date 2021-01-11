@@ -1,3 +1,5 @@
+glusterfs_ppa_version: latest
+
 glusterfs_cluster_hosts: []
 
 # this array should contains items with this format:
