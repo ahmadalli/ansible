@@ -1,0 +1,22 @@
+---
+- name: remove old configs
+  file:
+    path: /etc/netplan
+    state: absent
+- name: recreate netplan directory
+  file:
+    path: /etc/netplan
+    state: directory
+    owner: root
+    group: root
+    mode: "0755"
+- name: generate netplan config file
+  copy:
+    dest: /etc/netplan/config.yaml
+    content: |
+      # Ansible managed
+      {{ network_links | to_netplan | to_yaml }}
+- name: test netplan configs
+  shell: netplan generate
+- name: apply configs
+  shell: netplan apply

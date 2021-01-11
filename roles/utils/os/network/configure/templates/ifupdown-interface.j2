@@ -1,0 +1,32 @@
+{% if item.bridge.name | default(False, True) %}
+{%   if item.interface %}
+auto {{ item.interface }}
+iface {{ item.interface }} inet manual
+{%   endif %}
+{% endif %}
+
+{% for address in item.addresss %}
+auto {{ item.bridge.name | default(item.interface, True) }}
+iface {{ item.bridge.name | default(item.interface, True) }} inet static
+  address   {{ address | ansible.netcommon.ipaddr('address') }}
+  network   {{ address | ansible.netcommon.ipaddr('network') }}
+  netmask   {{ address | ansible.netcommon.ipaddr('netmask') }}
+  broadcast {{ address | ansible.netcommon.ipaddr('broadcast') }}
+{%   if item.gateway | default(False, True) %}
+  gateway {{ item.gateway }}
+{%   endif %}
+{%   for ns in nameservers %}
+  dns-nameservers {{ ns }}
+{%   endfor %}
+{%   if item.bridge.name | default(False, True) %}
+  bridge_ports {{ item.interface }}
+{%     if item.parameters %}
+{%       if item.parameters.stp | default(False, True) %}
+  bridge_stp on
+{%       endif %}
+{%       if item.parameters.forward_delay | default(False, True) %}
+  bridge_waitport {{ item.parameters.forward_delay | int }}
+{%       endif %}
+{%     endif %}
+{%   endif %}
+{% endfor %}

@@ -1,0 +1,47 @@
+---
+- name: untested in production warning
+  pause:
+    prompt: |
+      this role hasn't been tested in production environment.
+      it's highly recommended to test it in staging environment first.
+      press enter to continue or ctrl + c to abort
+- name: clear old network configs
+  file:
+    state: absent
+    path: /etc/network/interfaces.d/
+- name: create configs directory
+  file:
+    state: directory
+    path: /etc/network/interfaces.d/
+    owner: root
+    group: root
+    mode: "0755"
+- name: fill interfaces file with localhost only
+  copy:
+    dest: /etc/network/interfaces
+    owner: root
+    group: root
+    mode: "0644"
+    content: |
+      # Ansible managed
+
+      # This file describes the network interfaces available on your system
+      # and how to activate them. For more information, see interfaces(5).
+
+      source /etc/network/interfaces.d/*
+
+      # The loopback network interface
+      auto lo
+      iface lo inet loopback
+- name: create network configs
+  template:
+    src: ifupdown-interface.j2
+    dest: /etc/network/interfaces.d/{{ item.bridge.name | default(item.interface, True) }}
+    owner: root
+    group: root
+    mode: 0644
+  loop: "{{ network_links }}"
+- name: apply network configurations
+  service:
+    name: networking
+    state: restarted
