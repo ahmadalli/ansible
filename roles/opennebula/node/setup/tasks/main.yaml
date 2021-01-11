@@ -63,6 +63,23 @@
     name: lvm2-lvmetad.service
     enabled: false
     state: stopped
+- name: get lvm disk stats
+  community.general.parted:
+    device: "{{ opennebula_datastore_lvm_device | mandatory }}"
+    unit: MB
+    state: info
+  register: lvm_info
+- name: check disk
+  when: lvm_info.partitions | length > 0
+  block:
+    - name: check if partition has filesystem
+      when: lvm_info.partitions[0].fstype | length > 0
+      ansible.builtin.fail: |
+        the disk is already partitioned and {{ opennebula_datastore_lvm_device }}1 has filesystem
+    - name: check if partition has lvm flag
+      when: "'lvm' not in lvm_info.partitions[0].flags"
+      ansible.builtin.fail: |
+        the disk is already partitioned but {{ opennebula_datastore_lvm_device }}1 doesn't have lvm flag
 - name: create lvm parition
   community.general.parted:
     device: "{{ opennebula_datastore_lvm_device | mandatory }}"
@@ -70,7 +87,7 @@
     flags: [lvm]
     state: present
 - name: create lvm group
-  lvg:
+  community.general.lvg:
     vg: vg-one-{{ opennebula_datastore_system_id }}
     pvs:
       - "{{ opennebula_datastore_lvm_device }}1"
