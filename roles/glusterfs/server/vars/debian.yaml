@@ -5,7 +5,7 @@ _package_repo_key_info:
 _package_repo_info:
   ansible_module: ansible.builtin.apt_repository
   repos:
-    - ppa:gluster/glusterfs-{{ glusterfs_ppa_version }}
+    # - ppa:gluster/glusterfs-{{ glusterfs_ppa_version }}
 
 _package_info:
   ansible_module: ansible.builtin.apt
