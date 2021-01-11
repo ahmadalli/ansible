@@ -13,3 +13,7 @@ tags:
   - docker
   - opennebula
 repository: https://github.com/ahmadalli/ansible
+dependencies:
+  community.general: "*"
+  ansible.posix: "*"
+  gluster.gluster: "*"
