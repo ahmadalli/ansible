@@ -1,2 +1,2 @@
 - name: os network manager based configs
-  include: "{{ os_network_manager }}.yaml"
+  ansible.builtin.include: "{{ os_network_manager }}.yaml"
