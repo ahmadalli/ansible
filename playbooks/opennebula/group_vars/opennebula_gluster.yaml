@@ -1,0 +1,10 @@
+opennebula_gluster_volume_name: opennebula
+
+glusterfs_cluster_hosts:
+  - opennebula_gluster
+glusterfs_volumes:
+  - name: "{{ opennebula_gluster_volume_name }}"
+    brick:
+      path: /var/opt/gluster/bricks/{{ opennebula_gluster_volume_name }}
+      owner: oneadmin
+      group: oneadmin

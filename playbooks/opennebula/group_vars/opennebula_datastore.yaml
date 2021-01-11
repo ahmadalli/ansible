@@ -1,0 +1,9 @@
+opennebula_node_datastore_glusterfs_mount_path: /mnt/gluster/{{ opennebula_gluster_volume_name }}
+
+glusterfs_mounts:
+  - hosts:
+      - opennebula_gluster
+    volume: "{{ opennebula_gluster_volume_name }}"
+    mount:
+      path: "{{ opennebula_node_datastore_glusterfs_mount_path }}"
+      path_force_create: true

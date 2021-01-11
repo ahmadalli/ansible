@@ -1,0 +1,2 @@
+opennebula_datastore_lvm_device: /dev/sdb
+opennebula_datastore_system_id: 100

@@ -1,0 +1,15 @@
+- name: setup gluster volume
+  hosts: opennebula_gluster
+  gather_facts: true
+  roles:
+    - glusterfs/server
+
+- name: setup frontend
+  hosts: opennebula_frontend
+  roles:
+    - opennebula/frontend/setup
+
+- name: setup hypervisor nodes
+  hosts: opennebula_node
+  roles:
+    - glusterfs/server
