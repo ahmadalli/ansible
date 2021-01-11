@@ -21,7 +21,6 @@ def main():
                            'tcp', 'rdma', 'tcp,rdma']),
             bricks=dict(type='list', aliases=['brick']),
             start_on_create=dict(type='bool', default=True),
-            options=dict(type='dict', default={}),
             force=dict(type='bool', default=False),
         ),
     )
