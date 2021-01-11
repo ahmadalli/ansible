@@ -33,6 +33,7 @@
       ansible.builtin.file:
         state: absent
         path: "{{ item.mount.path }}"
+      when: p.stat.exists and not p.stat.isdir
     - name: ensure the mount directory is created
       ansible.builtin.file:
         state: directory
