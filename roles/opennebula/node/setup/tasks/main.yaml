@@ -20,7 +20,7 @@
   ansible.builtin.lineinfile:
     path: /etc/modules
     regexp: ^br_netfilter$
-    line: br_netfilter # not required. Required for C(state=present). The line to insert/replace into the file. If C(backrefs) is set, may contain backreferences that will get expanded with the C(regexp) capture groups if the regexp matches.
+    line: br_netfilter
 - name: load br_netfilter module
   community.general.modprobe:
     name: br_netfilter
