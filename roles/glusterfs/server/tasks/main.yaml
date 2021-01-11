@@ -1,0 +1,59 @@
+- name: gather os specific variables
+  ansible.builtin.include_vars: "{{ item }}"
+  with_first_found:
+    - "{{ ansible_distribution|lower }}.yaml"
+    - "{{ ansible_os_family|lower }}.yaml"
+    - default.yaml
+  tags:
+    - facts
+- name: install gluster server package
+  ansible.builtin.include_role:
+    name: utils/os/package/manager
+- name: gluster cli bash-completion
+  environment:
+    http_proxy: "{{ proxy_address }}"
+    https_proxy: "{{ proxy_address }}"
+  get_url:
+    url: https://raw.githubusercontent.com/gluster/glusterfs/master/extras/command-completion/gluster.bash
+    dest: /etc/bash_completion.d/gluster
+    mode: "0755"
+- name: populate gluster server hosts
+  ansible.builtin.set_fact:
+    _cluster_hosts: "{{ _cluster_hosts | default([], True) | union(query('inventory_hostnames', item.hosts)) }}"
+  loop: "{{ glusterfs_cluster_hosts }}"
+- name: add cluster hosts to /etc/hosts
+  ansible.builtin.blockinfile:
+    path: /etc/hosts
+    marker: "# {mark} ANSIBLE MANAGED BLOCK glusterfs cluster"
+    block: |
+      {% for host in _cluster_hosts %}
+      {{ hostvars[host]['network_private_ip'] | default(hostvars[host]['ansible_host'] ,True) }} {{ host }}
+      {% endfor %}
+- name: ensure the brick directory is created
+  ansible.builtin.file:
+    state: directory
+    path: "{{ item.brick.path }}"
+    mode: "{{ '%04d' | format(item.brick.mode | default(755, True) | int) }}"
+    owner: "{{ item.brick.owner | default('root', True) }}"
+    group: "{{ item.brick.group | default('root', True) }}"
+    recurse: yes
+  loop: "{{ glusterfs_volumes }}"
+- name: setup volume
+  delegate_to: "{{ gluster_hosts[0] }}"
+  run_once: true
+  block:
+    - name: peer probe hosts
+      gluster.gluster.gluster_peer:
+        state: present
+        nodes: "{{ gluster_hosts | join(',') }}"
+    - name: setup volume
+      ahmadalli.ansible.gluster_replicated_volume:
+        name: "{{ item.name }}"
+        cluster: "{{ _cluster_hosts }}"
+        bricks:
+          - "{{ item.brick.path }}"
+        transport: tcp
+        state: present
+        start_on_create: true
+        force: True
+      loop: "{{ glusterfs_volumes }}"

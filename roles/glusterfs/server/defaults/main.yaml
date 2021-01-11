@@ -1,0 +1,9 @@
+glusterfs_cluster_hosts: []
+glusterfs_volumes: []
+  # - name:
+  #   brick:
+  #     path:
+  #     path_force_create: # whether remove the path if it's not a directory or not
+  #     mode:
+  #     owner:
+  #     group:
