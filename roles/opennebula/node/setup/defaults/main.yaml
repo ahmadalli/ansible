@@ -1,0 +1,4 @@
+opennebula_node_datastore_glusterfs_mount_path:
+
+opennebula_datastore_lvm_device:
+opennebula_datastore_system_id:

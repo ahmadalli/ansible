@@ -1,0 +1,76 @@
+---
+- name: gather os specific variables
+  ansible.builtin.include_vars: "{{ item }}"
+  with_first_found:
+    - "{{ ansible_distribution|lower }}.yaml"
+    - "{{ ansible_os_family|lower }}.yaml"
+    - default.yaml
+  tags:
+    - facts
+- name: install opennebula node packages
+  ansible.builtin.include_role:
+    name: utils/os/package/manager
+- name: remove virsh default network
+  ansible.builtin.shell: virsh net-destroy default && virsh net-undefine default
+- name: setup network
+  ansible.builtin.include_role:
+    name: utils/os/network/configure
+# we do this because br_netfilter might get loaded in future and if it does, it'll ruin our connectivity without proper configs
+- name: persist br_netfilter module
+  ansible.builtin.lineinfile:
+    path: /etc/modules
+    regexp: ^br_netfilter$
+    line: br_netfilter # not required. Required for C(state=present). The line to insert/replace into the file. If C(backrefs) is set, may contain backreferences that will get expanded with the C(regexp) capture groups if the regexp matches.
+- name: load br_netfilter module
+  community.general.modprobe:
+    name: br_netfilter
+    state: present
+# https://wiki.libvirt.org/page/Networking#Creating_network_initscripts
+- name: disable netfilter on bridges
+  ansible.posix.sysctlsysctl:
+    name: "{{ item }}"
+    reload: yes
+    value: "0"
+  loop:
+    - net.bridge.bridge-nf-call-ip6tables
+    - net.bridge.bridge-nf-call-iptables
+    - net.bridge.bridge-nf-call-arptables
+- name: setup glusterfs volume mount
+  ansible.builtin.include_role:
+    name: glusterfs/mount
+- name: ensure datastore directory exists in glusterfs volume
+  ansible.builtin.file:
+    path: "{{ opennebula_node_datastore_glusterfs_mount_path }}/datastores"
+    owner: oneadmin
+    group: oneadmin
+    state: directory
+  run_once: true
+- name: create datastore softlink
+  ansible.builtin.file:
+    src: "{{ opennebula_node_datastore_glusterfs_mount_path }}/datastores"
+    dest: /var/lib/one/datastores
+    owner: oneadmin
+    group: oneadmin
+    follow: no
+    state: link
+- name: config lvm to disable lvmetad
+  ansible.builtin.lineinfile:
+    path: /etc/lvm/lvm.conf
+    regexp: use_lvmetad =.*
+    line: use_lvmetad = 0
+- name: disable and stop lvmetad
+  ansible.builtin.systemd:
+    name: lvm2-lvmetad.service
+    enabled: false
+    state: stopped
+- name: create lvm parition
+  community.general.parted:
+    device: "{{ opennebula_datastore_lvm_device | mandatory }}"
+    number: 1
+    flags: [lvm]
+    state: present
+- name: create lvm group
+  lvg:
+    vg: vg-one-{{ opennebula_datastore_system_id }}
+    pvs:
+      - "{{ opennebula_datastore_lvm_device }}1"
