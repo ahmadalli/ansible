@@ -16,4 +16,4 @@ _package_repo_info:
 _package_info:
   ansible_module: ansible.builtin.apt
   packages:
-    - opennebula-node
+    - name: opennebula-node
