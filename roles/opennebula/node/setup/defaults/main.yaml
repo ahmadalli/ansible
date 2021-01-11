@@ -2,3 +2,35 @@ opennebula_node_datastore_glusterfs_mount_path:
 
 opennebula_datastore_lvm_device:
 opennebula_datastore_system_id:
+
+opennebula_public_interface_name:
+opennebula_public_bridge_name:
+opennebula_public_addresses: []
+opennebula_public_gateway:
+opennebula_public_nameservers: []
+
+opennebula_private_interface_name:
+opennebula_private_bridge_name:
+opennebula_private_addresses: []
+opennebula_private_gateway:
+opennebula_private_nameservers: []
+
+network_links:
+  - interface: "{{ opennebula_public_interface_name }}"
+    bridge:
+      name: "{{ opennebula_public_bridge_name }}"
+      parameters:
+        stp: false
+        forward_delay:
+    addresses: "{{ opennebula_public_addresses }}"
+    gateway: "{{ opennebula_public_gateway }}"
+    nameservers: "{{ opennebula_public_nameservers }}"
+  - interface: "{{ opennebula_private_interface_name }}"
+    bridge:
+      name: "{{ opennebula_private_bridge_name }}"
+      parameters:
+        stp: false
+        forward_delay:
+    addresses: "{{ opennebula_private_addresses }}"
+    gateway: "{{ opennebula_private_gateway }}"
+    nameservers: "{{ opennebula_private_nameservers }}"
