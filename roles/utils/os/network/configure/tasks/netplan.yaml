@@ -16,6 +16,9 @@
     content: |
       # Ansible managed
       {{ network_links | to_netplan | to_yaml }}
+    owner: root
+    group: root
+    mode: "0644"
 - name: test netplan configs
   shell: netplan generate
 - name: apply configs
