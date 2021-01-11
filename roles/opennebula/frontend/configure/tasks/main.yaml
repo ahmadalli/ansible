@@ -58,3 +58,13 @@
     - opennebula-sunstone
 - name: check if opennebula service is started
   shell: oneuser show
+- name: get public key
+  slurp:
+    src: /var/lib/one/.ssh/id_rsa.pub
+  register: frontend_public_key
+- name: propagate authorized key
+  set_fact:
+    opennebula_frontend_authorized_key: "{{ frontend_public_key['content'] | b64decode }}"
+  delegate_to: "{{ item }}"
+  delegate_facts: true
+  with_items: "{{ groups['opennebula_node'] }}"

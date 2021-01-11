@@ -86,3 +86,10 @@
     vg: vg-one-{{ opennebula_datastore_system_id }}
     pvs:
       - "{{ opennebula_datastore_lvm_device }}1"
+- name: add frontend public key
+  authorized_key:
+    user: oneadmin
+    key: "{{ opennebula_frontend_authorized_key }}"
+    exclusive: yes
+    state: present
+    manage_dir: no

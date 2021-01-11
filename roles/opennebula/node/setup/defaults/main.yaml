@@ -34,3 +34,5 @@ network_links:
     addresses: "{{ opennebula_private_addresses }}"
     gateway: "{{ opennebula_private_gateway }}"
     nameservers: "{{ opennebula_private_nameservers }}"
+
+opennebula_frontend_authorized_key:
