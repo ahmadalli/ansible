@@ -6,7 +6,7 @@
 import platform
 from ansible.module_utils.basic import AnsibleModule
 
-from .helper import GlusterVolumeHelper
+from ansible_collections.ahmadalli.ansible.plugins.module_utils.gluster import GlusterVolumeHelper
 
 
 def main():
