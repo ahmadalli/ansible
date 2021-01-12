@@ -21,19 +21,19 @@ class GlusterVolumeHelper(object):
         args = [self._gluster_bin, '--mode=script']
         args.extend(gargs)
         try:
-            rc, out, err = module.run_command(args, **kwargs)
+            rc, out, err = self._module.run_command(args, **kwargs)
             if rc != 0:
-                module.fail_json(msg='error running gluster (%s) command (rc=%d): %s' %
+                self._module.fail_json(msg='error running gluster (%s) command (rc=%d): %s' %
                                  (' '.join(args), rc, out or err), exception=traceback.format_exc())
         except Exception as e:
-            module.fail_json(msg='error running gluster (%s) command: %s' % (' '.join(args),
+            self._module.fail_json(msg='error running gluster (%s) command: %s' % (' '.join(args),
                                                                              to_native(e)), exception=traceback.format_exc())
         return out
 
     def run_gluster_nofail(self, gargs: list, **kwargs):
         args = [self._gluster_bin]
         args.extend(gargs)
-        rc, out, err = module.run_command(args, **kwargs)
+        rc, out, err = self._module.run_command(args, **kwargs)
         if rc != 0:
             return None
         return out
