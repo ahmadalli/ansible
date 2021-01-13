@@ -47,7 +47,7 @@
     state: absent
     path: /var/lib/one/datastores
   when: |
-    not (datastore_dir_stat.stat.islnk | default(false, true))
+    not (datastore_dir_stat.stat.islnk | default(false, True))
     or datastore_dir_stat.stat.lnk_source != "{{ opennebula_node_datastore_glusterfs_mount_path }}/datastores"
 - name: create datastore softlink
   ansible.builtin.file:
