@@ -41,7 +41,7 @@ DISK     = [ driver = "raw" , cache = "none"]
 {%- endraw %}
 {% if opennebula_one_vmm_exec_kvm_config_nic_override %}
 NIC = {{ opennebula_one_vmm_exec_kvm_config_nic | ahmadalli.ansible.to_config }}
-{% else %%}
+{% else %}
 #NIC     = [ filter = "clean-traffic", model="virtio" ]
 {% endif %}
 {%- raw %}
