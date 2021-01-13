@@ -4,7 +4,7 @@ opennebula_frontend_oned_configs_database:
     TIMEOUT: "{{ opennebula_frontend_oned_configs_database_sqlite_timeout }}"
   mysql:
     SERVER: "{{ opennebula_frontend_oned_configs_database_mysql_server }}"
-    PORT: "{{ opennebula_frontend_oned_configs_database_mysql_port }}"
+    PORT: "{{ opennebula_frontend_oned_configs_database_mysql_port | int }}"
     USER: "{{ opennebula_frontend_oned_configs_database_mysql_user }}"
     PASSWD: "{{ opennebula_frontend_oned_configs_database_mysql_passwd }}"
     DB_NAME: "{{ opennebula_frontend_oned_configs_database_mysql_db_name }}"
