@@ -3,6 +3,7 @@ opennebula_frontend_oned_configs_database:
     BACKEND: "{{ opennebula_frontend_oned_configs_database_backend }}"
     TIMEOUT: "{{ opennebula_frontend_oned_configs_database_sqlite_timeout }}"
   mysql:
+    BACKEND: "{{ opennebula_frontend_oned_configs_database_backend }}"
     SERVER: "{{ opennebula_frontend_oned_configs_database_mysql_server }}"
     PORT: "{{ opennebula_frontend_oned_configs_database_mysql_port | int }}"
     USER: "{{ opennebula_frontend_oned_configs_database_mysql_user }}"
