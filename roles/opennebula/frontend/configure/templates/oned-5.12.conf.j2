@@ -1,3 +1,4 @@
+{%- raw %}
 #*******************************************************************************
 #                       OpenNebula Configuration file
 #*******************************************************************************
@@ -72,9 +73,9 @@ MONITORING_INTERVAL_DB_UPDATE = 0
 
 SCRIPTS_REMOTE_DIR=/var/tmp/one
 
-
+{%- endraw %}
 DB = {{ opennebula_frontend_oned_configs_database[opennebula_frontend_oned_configs_database_backend] | ahmadalli.ansible.to_config }}
-
+{%- raw %}
 # Sample configuration for MySQL
 # DB = [ BACKEND = "mysql",
 #        SERVER  = "localhost",
@@ -1414,3 +1415,4 @@ VN_MAD_CONF = [
     NAME = "bridge",
     BRIDGE_TYPE = "linux"
 ]
+{%- endraw %}
