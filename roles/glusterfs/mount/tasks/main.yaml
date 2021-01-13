@@ -14,8 +14,8 @@
     path: /etc/hosts
     marker: "# {mark} ANSIBLE MANAGED BLOCK gluster mount role"
     block: |
-      {% for glusterMount in glusterfs_mounts %}
-      {%   for host in query('inventory_hostnames', glusterfs_mounts.hosts) %}
+      {% for glusterfs_mount in glusterfs_mounts %}
+      {%   for host in query('inventory_hostnames', glusterfs_mount.hosts) %}
       {{ hostvars[host]['ip'] | default(hostvars[host]['ansible_host'] ,True) }} {{ host }}
       {%   endfor %}
       {% endfor %}
