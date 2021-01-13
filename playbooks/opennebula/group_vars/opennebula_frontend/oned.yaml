@@ -1,11 +1,11 @@
 opennebula_frontend_oned_configs_database_backend: mysql
 
-opennebula_frontend_oned_configs_database_mysql_server: "{{ '127.0.0.1' if mysql_bind_address is '0.0.0.0' else mysql_bind_address }}"
+opennebula_frontend_oned_configs_database_mysql_server: "{{ '127.0.0.1' if mysql_bind_address == '0.0.0.0' else mysql_bind_address }}"
 opennebula_frontend_oned_configs_database_mysql_port: "{{ mysql_port | int }}"
 opennebula_frontend_oned_configs_database_mysql_user: "{{ mysql_users[0].name }}"
 opennebula_frontend_oned_configs_database_mysql_passwd: "{{ mysql_users[0].password }}"
 opennebula_frontend_oned_configs_database_mysql_db_name: "{{ mysql_databases[0].name }}"
-opennebula_frontend_oned_configs_database_mysql_connections: "{{ mysql_max_connections | int - 1 | str }}"
+opennebula_frontend_oned_configs_database_mysql_connections: "{{ (mysql_max_connections | int - 1) | string }}"
 opennebula_frontend_oned_configs_database_mysql_compare_binary: "no"
 
 # this can be no, yes, only. For yes and only, provide path to
