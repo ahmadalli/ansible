@@ -116,10 +116,6 @@ class GlusterVolumeHelper(object):
         self.run_gluster(args)
 
     def remove_bricks(self, name: str, removed_bricks: list, replica: int):
-        # max-tries=12 with default_interval=10 secs
-        max_tries = 12
-        retries = 0
-        success = False
         args = ['volume', 'remove-brick', name]
         args.append('replica')
         args.append(str(replica))
