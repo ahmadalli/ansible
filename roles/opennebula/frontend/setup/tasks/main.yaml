@@ -22,6 +22,17 @@
     owner: oneadmin
     group: oneadmin
     state: directory
+- name: check state of datastore directory
+  ansible.builtin.stat:
+    path: /var/lib/one/datastores
+  register: datastore_dir_stat
+- name: remove current datastore dir if not link or pointing at wrong location
+  file:
+    state: absent
+    path: /var/lib/one/datastores
+  when: |
+    not (datastore_dir_stat.stat.islnk | default(false, True))
+    or datastore_dir_stat.stat.lnk_source != "{{ opennebula_node_datastore_glusterfs_mount_path }}/datastores"
 - name: create datastore softlink
   ansible.builtin.file:
     src: "{{ opennebula_node_datastore_glusterfs_mount_path }}/datastores"
