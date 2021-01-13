@@ -47,7 +47,7 @@
 
       [Service]
       TimeoutSec=3600
-- name: start services
+- name: restart services
   ansible.builtin.systemd:
     name: "{{ item }}"
     daemon_reload: true
