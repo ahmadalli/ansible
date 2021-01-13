@@ -15,7 +15,7 @@
     dest: /etc/netplan/config.yaml
     content: |
       # Ansible managed
-      {{ network_links | to_netplan | to_yaml }}
+      {{ network_links | ahmadalli.ansible.to_netplan | to_yaml }}
     owner: root
     group: root
     mode: "0644"

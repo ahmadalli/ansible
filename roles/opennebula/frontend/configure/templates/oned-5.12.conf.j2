@@ -73,7 +73,7 @@ MONITORING_INTERVAL_DB_UPDATE = 0
 SCRIPTS_REMOTE_DIR=/var/tmp/one
 
 
-DB = {{ opennebula_frontend_oned_configs_database[opennebula_frontend_oned_configs_database_backend] | to_config }}
+DB = {{ opennebula_frontend_oned_configs_database[opennebula_frontend_oned_configs_database_backend] | ahmadalli.ansible.to_config }}
 
 # Sample configuration for MySQL
 # DB = [ BACKEND = "mysql",
