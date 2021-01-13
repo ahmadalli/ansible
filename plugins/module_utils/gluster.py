@@ -6,7 +6,7 @@
 
 import traceback
 from ansible.module_utils.basic import AnsibleModule
-from ansible.module_utils._text import to_native
+from ansible.module_utils._text import to_native, to_text
 
 
 class GlusterVolumeHelper(object):
@@ -20,6 +20,7 @@ class GlusterVolumeHelper(object):
     def run_gluster(self, gargs: list, **kwargs):
         args = [self._gluster_bin, '--mode=script']
         args.extend(gargs)
+        args = [to_text(item) for item in args]
         try:
             rc, out, err = self._module.run_command(args, **kwargs)
             if rc != 0:
@@ -33,6 +34,7 @@ class GlusterVolumeHelper(object):
     def run_gluster_nofail(self, gargs: list, **kwargs):
         args = [self._gluster_bin]
         args.extend(gargs)
+        args = [to_text(item) for item in args]
         rc, out, err = self._module.run_command(args, **kwargs)
         if rc != 0:
             return None
