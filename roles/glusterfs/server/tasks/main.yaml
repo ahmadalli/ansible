@@ -38,7 +38,6 @@
     mode: "{{ '%04d' | format(item.brick.mode | default(755, True) | int) }}"
     owner: "{{ item.brick.owner | default('root', True) }}"
     group: "{{ item.brick.group | default('root', True) }}"
-    recurse: yes
   loop: "{{ glusterfs_volumes }}"
 - name: setup volume
   delegate_to: "{{ _cluster_hosts[0] }}"
