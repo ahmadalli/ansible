@@ -5,14 +5,14 @@
   ansible.builtin.template:
     src: oned-{{ opennebula_frontend_version }}.conf.j2
     dest: /etc/one/oned.conf
-    mode: '0640'
+    mode: "0640"
     owner: root
     group: oneadmin
 - name: update sunstone server configs
   ansible.builtin.template:
     src: sunstone-server-{{ opennebula_frontend_version }}.conf.j2
     dest: /etc/one/sunstone-server.conf
-    mode: '0640'
+    mode: "0640"
     owner: root
     group: oneadmin
 - name: include oned kvm override variables
@@ -21,7 +21,7 @@
   ansible.builtin.template:
     src: vmm_exec_kvm-{{ opennebula_frontend_version }}.conf.j2
     dest: /etc/one/vmm_exec/vmm_exec_kvm.conf
-    mode: '0640'
+    mode: "0640"
     owner: root
     group: oneadmin
 - name: clear systemd overrides
@@ -47,15 +47,12 @@
 
       [Service]
       TimeoutSec=3600
-- name: restart services
+- name: restart opennebula service
   ansible.builtin.systemd:
-    name: "{{ item }}"
+    name: opennebula
     daemon_reload: true
     enabled: true
     state: restarted
-  loop:
-    - opennebula
-    - opennebula-sunstone
 - name: check if opennebula service is started
   command: oneuser show
   register: oneuser_check
@@ -71,3 +68,9 @@
   delegate_to: "{{ item }}"
   delegate_facts: true
   with_items: "{{ groups['opennebula_node'] }}"
+- name: restart sunstone service
+  ansible.builtin.systemd:
+    name: opennebula-sunstone
+    daemon_reload: true
+    enabled: true
+    state: restarted
