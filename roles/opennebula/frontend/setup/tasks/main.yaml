@@ -13,6 +13,20 @@
 - name: install opennebula frontend packages
   ansible.builtin.include_role:
     name: utils/os/package/manager
+- name: check /usr/share/one/gems symlink
+  ansible.builtin.stat:
+    path: /usr/share/one/gems
+  register: one_gems_stat
+- name: unlink /usr/share/one/gems
+  ansible.builtin.file:
+    state: absent
+    path: /usr/share/one/gems
+  when: one_gems_stat.stat.islnk | default(false, True)
+- name: install gems
+  command: /usr/share/one/install_gems --yes
+  register: __install_gems
+  failed_when: __install_gems.rc > 0
+  changed_when: __install_gems == 0
 - name: setup glusterfs volume mount
   ansible.builtin.include_role:
     name: glusterfs/mount
