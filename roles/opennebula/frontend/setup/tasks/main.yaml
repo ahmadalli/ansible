@@ -24,7 +24,7 @@
     path: /usr/share/one/gems
   when: one_gems_stat.stat.islnk | default(false, True)
 - name: install gems
-  command: /usr/share/one/install_gems --yes
+  shell: /usr/share/one/install_gems --yes
   register: __install_gems
   failed_when: __install_gems.rc > 0
   changed_when: __install_gems == 0
