@@ -42,8 +42,10 @@
     group: root
     mode: "0644"
     content: |
+      {% if opennebula_frontend_oned_configs_database_backend != 'sqlite' %}
       [Unit]
       After={{ opennebula_frontend_database_systemd_unit }}
+      {% endif %}
 
       [Service]
       TimeoutSec=3600

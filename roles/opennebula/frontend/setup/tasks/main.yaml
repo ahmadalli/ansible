@@ -2,6 +2,7 @@
 - name: install mysql
   include_role:
     name: geerlingguy.mysql
+  when: opennebula_frontend_oned_configs_database_backend == 'mysql'
 - name: gather os specific variables
   ansible.builtin.include_vars: "{{ item }}"
   with_first_found:
