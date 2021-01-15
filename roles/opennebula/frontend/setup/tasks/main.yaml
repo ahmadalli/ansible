@@ -3,6 +3,9 @@
   include_role:
     name: geerlingguy.mysql
   when: opennebula_frontend_oned_configs_database_backend == 'mysql'
+- name: add required package
+  set_fact:
+    opennebula_frontend_packages: "{{ opennebula_frontend_packages | union(['ruby-bundler']) }}"
 - name: gather os specific variables
   ansible.builtin.include_vars: "{{ item }}"
   with_first_found:
