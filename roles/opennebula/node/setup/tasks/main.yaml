@@ -11,7 +11,7 @@
   ansible.builtin.include_role:
     name: utils/os/package/manager
 - name: remove virsh default network
-  ansible.builtin.shell: virsh net-destroy default && virsh net-undefine default
+  ansible.builtin.shell: virsh net-destroy default; virsh net-undefine default
 - name: setup network
   ansible.builtin.include_role:
     name: utils/os/network/configure
