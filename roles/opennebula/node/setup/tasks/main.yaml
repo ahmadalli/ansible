@@ -2,9 +2,9 @@
 - name: gather os specific variables
   ansible.builtin.include_vars: "{{ item }}"
   with_first_found:
-    - "{{ ansible_distribution|lower }}.yaml"
-    - "{{ ansible_os_family|lower }}.yaml"
-    - default.yaml
+    - "packages/{{ ansible_distribution|lower }}.yaml"
+    - "packages/{{ ansible_os_family|lower }}.yaml"
+    - packages/default.yaml
   tags:
     - facts
 - name: install opennebula node packages
