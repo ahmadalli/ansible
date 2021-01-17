@@ -69,9 +69,9 @@ class FilterModule(object):
 
             if not 'addresses' in target:
                 target['addresses'] = []
-            if 'addresses' in link:
+            if 'addresses' in link and isinstance(link['addresses'], list):
                 target['addresses'].extend(link['addresses'])
-            if 'gateway' in link:
+            if 'gateway' in link and len(link['gateway']) > 0:
                 target['gateway4'] = link['gateway']
             if 'nameservers' in link and len(link['nameservers']) > 0:
                 target['nameservers'] = link['nameservers']
