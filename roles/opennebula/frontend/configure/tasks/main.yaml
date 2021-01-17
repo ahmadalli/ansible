@@ -71,3 +71,11 @@
   delegate_to: "{{ item }}"
   delegate_facts: true
   with_items: "{{ groups['opennebula_node'] }}"
+- name: propagate node hosts to /etc/hosts
+  ansible.builtin.blockinfile:
+    path: /etc/hosts
+    marker: "# {mark} ANSIBLE MANAGED BLOCK nebula nodes"
+    block: |
+      {% for host in groups['opennebula_node'] %}
+      {{ hostvars[host]['ip'] | default(hostvars[host]['ansible_host'] ,True) }} {{ host }}
+      {% endfor %}
