@@ -15,25 +15,4 @@ opennebula_private_addresses: []
 opennebula_private_gateway:
 opennebula_private_nameservers: []
 
-network_links:
-  - interface: "{{ opennebula_public_interface_name | default(None, True) }}"
-    bridge:
-      name: "{{ opennebula_public_bridge_name | default(None, True) }}"
-      parameters:
-        stp: false
-        forward_delay:
-    addresses: "{{ opennebula_public_addresses | default([], True) }}"
-    gateway: "{{ opennebula_public_gateway | default(None, True) }}"
-    nameservers: "{{ opennebula_public_nameservers | default([], True) }}"
-  - interface: "{{ opennebula_private_interface_name | default(None, True) }}"
-    bridge:
-      name: "{{ opennebula_private_bridge_name | default(None, True) }}"
-      parameters:
-        stp: false
-        forward_delay:
-    addresses: "{{ opennebula_private_addresses | default([], True) }}"
-    gateway: "{{ opennebula_private_gateway| default(None, True) }}"
-    nameservers: "{{ opennebula_private_nameservers | default([], True) }}"
-
-
 opennebula_frontend_authorized_key:
