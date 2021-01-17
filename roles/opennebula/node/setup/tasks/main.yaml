@@ -68,6 +68,7 @@
     name: lvm2-lvmetad.service
     enabled: false
     state: stopped
+  ignore_errors: true
 - name: get lvm disk stats
   community.general.parted:
     device: "{{ opennebula_datastore_lvm_device | mandatory }}"
