@@ -46,8 +46,8 @@ class FilterModule(object):
                 if 'interface' in link:
                     if link['interface'] in non_bridge_interfaces:
                         raise AnsibleError(
-                            'interface {} in link {} cannot be linked to bridge since it has static ip configurations'\
-                                .format(link['interface'], json.dumps(link) ))
+                            'interface {} in link {} cannot be linked to bridge since it has static ip configurations'
+                            .format(link['interface'], json.dumps(link)))
                     bridge_interfaces.add(link['interface'])
                     bridge['interfaces'].append(link['interface'])
                     ethernets[link['interface']]['dhcp4'] = False
@@ -61,9 +61,9 @@ class FilterModule(object):
                 target = bridge
             else:
                 if link['interface'] in bridge_interfaces:
-                        raise AnsibleError(
-                            'interface {} in link {} cannot be have static ip configurations since it\'s linked to a bridge'\
-                                .format(link['interface'], json.dumps(link) ))
+                    raise AnsibleError(
+                        'interface {} in link {} cannot be have static ip configurations since it\'s linked to a bridge'
+                        .format(link['interface'], json.dumps(link)))
                 non_bridge_interfaces.add(link['interface'])
                 target = ethernets[link['interface']]
 
