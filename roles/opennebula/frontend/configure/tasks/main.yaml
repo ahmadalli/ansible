@@ -15,6 +15,7 @@
     mode: "0640"
     owner: root
     group: oneadmin
+  notify: restart sunstone
 - name: include oned kvm override variables
   ansible.builtin.include_vars: vmm_exec_kvm.yaml
 - name: update kvm override configs
@@ -70,9 +71,3 @@
   delegate_to: "{{ item }}"
   delegate_facts: true
   with_items: "{{ groups['opennebula_node'] }}"
-- name: restart sunstone service
-  ansible.builtin.systemd:
-    name: opennebula-sunstone
-    daemon_reload: true
-    enabled: true
-    state: restarted

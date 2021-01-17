@@ -1,0 +1,7 @@
+---
+- name: restart sunstone
+  ansible.builtin.systemd:
+    name: opennebula-sunstone
+    daemon_reload: true
+    enabled: true
+    state: restarted
