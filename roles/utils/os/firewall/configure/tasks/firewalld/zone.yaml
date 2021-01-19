@@ -6,12 +6,12 @@
 
 - name: set zone configuration facts
   set_fact:
-    _interfaces: "{{ hostvars[host]['firewalld_zone_' + _config_key + '_interfaces'] | default([], True) | unique }}"
-    _sources: "{{ hostvars[host]['firewalld_zone_' + _config_key + '_sources'] | default([], True) | unique }}"
-    _source_hosts: "{{ hostvars[host]['firewalld_zone_' + _config_key + '_source_hosts'] | default([], True) | unique }}"
-    _ports: "{{ hostvars[host]['firewalld_zone_' + _config_key + '_ports'] | default([], True) | unique }}"
-    _services: "{{ hostvars[host]['firewalld_zone_' + _config_key + '_services'] | default([], True) | unique }}"
-    _rich_rules: "{{ hostvars[host]['firewalld_zone_' + _config_key + '_rich_rules'] | default([], True) | unique }}"
+    _interfaces: "{{ hostvars[inventory_hostname]['firewalld_zone_' + _config_key + '_interfaces'] | default([], True) | unique }}"
+    _sources: "{{ hostvars[inventory_hostname]['firewalld_zone_' + _config_key + '_sources'] | default([], True) | unique }}"
+    _source_hosts: "{{ hostvars[inventory_hostname]['firewalld_zone_' + _config_key + '_source_hosts'] | default([], True) | unique }}"
+    _ports: "{{ hostvars[inventory_hostname]['firewalld_zone_' + _config_key + '_ports'] | default([], True) | unique }}"
+    _services: "{{ hostvars[inventory_hostname]['firewalld_zone_' + _config_key + '_services'] | default([], True) | unique }}"
+    _rich_rules: "{{ hostvars[inventory_hostname]['firewalld_zone_' + _config_key + '_rich_rules'] | default([], True) | unique }}"
 
 - name: add _source_hosts to sources
   set_fact:
