@@ -2,7 +2,7 @@
 <!-- https://firewalld.org/documentation/man-pages/firewalld.service.html -->
 <service>
   {%- if item.short_name | default('', True) | length > 0 %}
-  <short>{{ item.short_name }}/short>
+  <short>{{ item.short_name }}</short>
   {%- endif %}
   {%- if item.description | default('', True) | length > 0 %}
   <description>{{ item.description }}</description>
