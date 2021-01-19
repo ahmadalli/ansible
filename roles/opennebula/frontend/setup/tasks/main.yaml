@@ -25,7 +25,7 @@
   ansible.builtin.file:
     state: absent
     path: /usr/share/one/gems
-  when: one_gems_stat.stat.islnk | default(false, True)
+  when: one_gems_stat.stat.islnk | default(false, true)
 - name: install gems
   shell: /usr/share/one/install_gems --yes
   register: __install_gems
@@ -49,7 +49,7 @@
     state: absent
     path: /var/lib/one/datastores
   when: |
-    not (datastore_dir_stat.stat.islnk | default(false, True))
+    not (datastore_dir_stat.stat.islnk | default(false, true))
     or datastore_dir_stat.stat.lnk_source != opennebula_node_datastore_glusterfs_mount_path+ "/datastores"
 - name: create datastore softlink
   ansible.builtin.file:

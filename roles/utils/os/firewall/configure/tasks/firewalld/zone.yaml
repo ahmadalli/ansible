@@ -1,7 +1,7 @@
 - name: set zone identification facts
   set_fact:
-    _config_key: "{{ 'zone_' + _zone_name if (_zone_name | default('', True) | length > 0) else 'default_zone' }}"
-    _is_default_zone: "{{ _zone_name | default('', True) | length == 0 }}"
+    _config_key: "{{ 'zone_' + _zone_name if (_zone_name | default('', true) | length > 0) else 'default_zone' }}"
+    _is_default_zone: "{{ _zone_name | default('', true) | length == 0 }}"
 
 - name: set zone configuration facts
   set_fact:
@@ -17,7 +17,7 @@
     _sources: "{{
       _sources |
       union(
-        query('inventory_hostnames', (_source_hosts | default([inventory_hostname], True))) |
+        query('inventory_hostnames', (_source_hosts | default([inventory_hostname], true))) |
         map('extract', hostvars) |
         map(attribute='ansible_host') |
         difference([ansible_host])
@@ -31,7 +31,7 @@
     _sources: "{{ _sources | map('ansible.netcommon.ipsubnet') }}"
 - name: generate redundant sources list
   set_fact:
-    _redundant_sources: "{{ _redundant_sources | default([], True) | union(_sources | ansible.netcommon.ipaddr(item) | difference([item])) | unique }}"
+    _redundant_sources: "{{ _redundant_sources | default([], true) | union(_sources | ansible.netcommon.ipaddr(item) | difference([item])) | unique }}"
   loop: "{{ _sources }}"
 - name: remove redundant sources
   set_fact:
@@ -97,4 +97,4 @@
     state: enabled
     permanent: yes
     immediate: yes
-  when: firewalld_zone_public_masquerade | default(false, True)
+  when: firewalld_zone_public_masquerade | default(false, true)

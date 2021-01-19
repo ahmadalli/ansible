@@ -21,7 +21,7 @@
 
 - name: reset firewalld
   include: reset.yaml
-  when: firewall_frontend_reset | default(False, True)
+  when: firewall_frontend_reset | default(False, true)
 
 - name: setup services
   ansible.builtin.template:
@@ -48,7 +48,7 @@
   register: _firewalld_default_zones
 - name: add default zones to firewalld_zones
   set_fact:
-    firewalld_zones: "{{ firewalld_zones | default([], True) | union(_firewalld_default_zones.files | map(attribute='path') | map('basename') | map('replace', '.xml', '')) | unique }}"
+    firewalld_zones: "{{ firewalld_zones | default([], true) | union(_firewalld_default_zones.files | map(attribute='path') | map('basename') | map('replace', '.xml', '')) | unique }}"
 
 - name: setup default zone
   include: firewalld/zone.yaml

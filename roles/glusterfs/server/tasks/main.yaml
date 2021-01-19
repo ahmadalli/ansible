@@ -21,7 +21,7 @@
     state: started
 - name: populate gluster server hosts
   ansible.builtin.set_fact:
-    _cluster_hosts: "{{ _cluster_hosts | default([], True) | union(query('inventory_hostnames', item)) }}"
+    _cluster_hosts: "{{ _cluster_hosts | default([], true) | union(query('inventory_hostnames', item)) }}"
   loop: "{{ glusterfs_cluster_hosts }}"
 - name: add cluster hosts to /etc/hosts
   ansible.builtin.blockinfile:
@@ -29,15 +29,15 @@
     marker: "# {mark} ANSIBLE MANAGED BLOCK glusterfs cluster"
     block: |
       {% for host in _cluster_hosts %}
-      {{ hostvars[host]['ip'] | default(hostvars[host]['ansible_host'] ,True) }} {{ host }}
+      {{ hostvars[host]['ip'] | default(hostvars[host]['ansible_host'] , true) }} {{ host }}
       {% endfor %}
 - name: ensure the brick directory is created
   ansible.builtin.file:
     state: directory
     path: "{{ item.brick.path }}"
-    mode: "{{ '%04d' | format(item.brick.mode | default(755, True) | int) }}"
-    owner: "{{ item.brick.owner | default('root', True) }}"
-    group: "{{ item.brick.group | default('root', True) }}"
+    mode: "{{ '%04d' | format(item.brick.mode | default(755, true) | int) }}"
+    owner: "{{ item.brick.owner | default('root', true) }}"
+    group: "{{ item.brick.group | default('root', true) }}"
   loop: "{{ glusterfs_volumes }}"
 - name: setup volume
   delegate_to: "{{ _cluster_hosts[0] }}"

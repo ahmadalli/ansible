@@ -16,7 +16,7 @@
     block: |
       {% for glusterfs_mount in glusterfs_mounts %}
       {%   for host in query('inventory_hostnames', glusterfs_mount.hosts) %}
-      {{ hostvars[host]['ip'] | default(hostvars[host]['ansible_host'] ,True) }} {{ host }}
+      {{ hostvars[host]['ip'] | default(hostvars[host]['ansible_host'], true) }} {{ host }}
       {%   endfor %}
       {% endfor %}
 - name: create mount directory if necessary

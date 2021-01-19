@@ -36,7 +36,7 @@
 - name: create network configs
   template:
     src: ifupdown-interface.j2
-    dest: /etc/network/interfaces.d/{{ item.bridge.name | default(item.interface, True) }}
+    dest: /etc/network/interfaces.d/{{ item.bridge.name | default(item.interface, true) }}
     owner: root
     group: root
     mode: 0644

@@ -16,6 +16,6 @@
   ansible.builtin.file:
     state: directory
     path: "{{ item.mount.path }}"
-    mode: "{{ '%04d' | format(item.mount.mode | default(755, True) | int) }}"
-    owner: "{{ item.mount.owner | default('root', True) }}"
-    group: "{{ item.mount.group | default('root', True) }}"
+    mode: "{{ '%04d' | format(item.mount.mode | default(755, true) | int) }}"
+    owner: "{{ item.mount.owner | default('root', true) }}"
+    group: "{{ item.mount.group | default('root', true) }}"

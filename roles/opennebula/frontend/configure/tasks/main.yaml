@@ -77,5 +77,5 @@
     marker: "# {mark} ANSIBLE MANAGED BLOCK nebula nodes"
     block: |
       {% for host in groups['opennebula_node'] %}
-      {{ hostvars[host]['ip'] | default(hostvars[host]['ansible_host'] ,True) }} {{ host }}
+      {{ hostvars[host]['ip'] | default(hostvars[host]['ansible_host'] , true) }} {{ host }}
       {% endfor %}
