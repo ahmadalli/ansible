@@ -42,7 +42,6 @@
     zone: drop
     state: present
     permanent: yes
-    immediate: yes
   when: not _is_default_zone
 
 - name: add interfaces
