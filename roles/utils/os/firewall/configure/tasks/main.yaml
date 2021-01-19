@@ -1,0 +1,7 @@
+- name: assert firewall_frontend
+  assert:
+    that: firewall_frontend in ["firewalld"]
+    fail_msg: firewall_frontend either must be "ufw" or "firewalld"
+- name: firewalld setup
+  when: firewall_frontend == 'firewalld'
+  include: firewalld/main.yaml

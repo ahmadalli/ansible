@@ -1,0 +1,28 @@
+- name: check if firewall_clear_iptables is allowed
+  ansible.builtin.fail:
+    msg: firewalld will reset all iptables rules on reload. use ufw if you don't want to clear iptables
+  when: not firewall_clear_iptables
+- name: clear configs
+  ansible.builtin.file:
+    path: /etc/firewalld/{{ item[0] }}
+    owner: root
+    group: root
+    mode: "0755"
+    state: "{{ item[1] }}"
+  with_nested:
+    - - icmptypes
+      - ipsets
+      - services
+      - zones
+  loop:
+    - absent
+    - directory
+- name: remove direct configs
+  file:
+    state: absent
+    path: /etc/firewalld/direct.xml
+  ignore_errors: yes
+- name: reload firewalld
+  ansible.builtin.systemd:
+    name: firewalld
+    state: reloaded

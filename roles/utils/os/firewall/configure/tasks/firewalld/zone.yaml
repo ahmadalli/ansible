@@ -1,0 +1,75 @@
+- name: set zone identification facts
+  set_fact:
+    _config_key: "{{ 'zone_' + _zone_name if (_zone_name | default('', True) | length > 0) else 'default_zone' }}"
+    _is_default_zone: "{{ _zone_name | default('', True) | length == 0 }}"
+    _zone_value: "{{ omit if _is_default_zone else _zone_name }}"
+
+- name: set zone configuration facts
+  set_fact:
+    _interfaces: "{{ hostvars[host]['firewalld_zone_' + _config_key + '_interfaces'] | default([], True) | unique }}"
+    _sources: "{{ hostvars[host]['firewalld_zone_' + _config_key + '_sources'] | default([], True) | unique }}"
+    _ports: "{{ hostvars[host]['firewalld_zone_' + _config_key + '_ports'] | default([], True) | unique }}"
+    _services: "{{ hostvars[host]['firewalld_zone_' + _config_key + '_services'] | default([], True) | unique }}"
+    _rich_rules: "{{ hostvars[host]['firewalld_zone_' + _config_key + '_rich_rules'] | default([], True) | unique }}"
+
+- name: ensure zone is present
+  ansible.posix.firewalld:
+    zone: drop
+    state: present
+    permanent: yes
+    immediate: yes
+  when: not _is_default_zone
+
+- name: add interfaces
+  ansible.posix.firewalld:
+    zone: "{{ _zone_value }}"
+    interface: "{{ item }}"
+    state: enabled
+    permanent: yes
+    immediate: yes
+  loop: "{{ _interfaces }}"
+
+- name: add sources
+  ansible.posix.firewalld:
+    zone: "{{ _zone_value }}"
+    source: "{{ item }}"
+    state: enabled
+    permanent: yes
+    immediate: yes
+  loop: "{{ _sources }}"
+
+- name: add ports
+  ansible.posix.firewalld:
+    zone: "{{ _zone_value }}"
+    port: "{{ item }}"
+    state: enabled
+    permanent: yes
+    immediate: yes
+  loop: "{{ _ports }}"
+
+- name: add services
+  ansible.posix.firewalld:
+    zone: "{{ _zone_value }}"
+    service: "{{ item }}"
+    state: enabled
+    permanent: yes
+    immediate: yes
+  loop: "{{ _services }}"
+
+- name: add rich rules
+  ansible.posix.firewalld:
+    zone: "{{ _zone_value }}"
+    rich_rule: "{{ item }}"
+    state: enabled
+    permanent: yes
+    immediate: yes
+  loop: "{{ _rich_rules }}"
+
+- name: setup firewalld_zone_public_masquerade
+  ansible.posix.firewalld:
+    zone: "{{ _zone_value }}"
+    masquerade: yes
+    state: enabled
+    permanent: yes
+    immediate: yes
+  when: firewalld_zone_public_masquerade | default(false, True)

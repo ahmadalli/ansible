@@ -1,0 +1,60 @@
+firewall_allow_bridge_forward: false
+firewall_frontend: firewalld
+firewall_frontend_reset: false
+
+# Firewalld Configurations
+
+# list of zones in addition to default zones
+firewalld_zones: []
+
+# https://firewalld.org/documentation/man-pages/firewalld.service.html
+firewalld_services:
+  []
+  # - name:
+  #   short_name:
+  #   description:
+  #   ports: []
+  #     # - port:
+  #     #   protocol:
+  #   protocols: []
+  #   source_ports: []
+  #     # - port:
+  #     #   protocol:
+  #   destination:
+  #     ipv4:
+  #     ipv6:
+
+# https://firewalld.org/documentation/man-pages/firewalld.direct.html
+# note: if a rich rule can be used, then they should always be preferred over direct rules
+# also check the Caveats section on the documentation
+firewalld_direct_chains: []
+  # - ipv: # ipv4|ipv6|eb
+  #   table:
+  #   chain:
+firewalld_direct_rules: []
+  # - ipv: # ipv4|ipv6|eb
+  #   table:
+  #   chain:
+  #   priority:
+  #   args:
+firewalld_direct_passthroughs: []
+  # - ipv: # ipv4|ipv6|eb
+  #   args:
+
+
+# default zone configs
+firewalld_default_zone_interfaces: []
+firewalld_default_zone_sources: []
+firewalld_default_zone_ports: []
+firewalld_default_zone_services: []
+firewalld_default_zone_rich_rules: []
+firewalld_default_zone_masquerade: false
+
+# other zone configs
+# replace 'public' with any zone you want
+firewalld_zone_public_interfaces: []
+firewalld_zone_public_sources: []
+firewalld_zone_public_ports: []
+firewalld_zone_public_services: []
+firewalld_zone_public_rich_rules: []
+firewalld_zone_public_masquerade: false

@@ -1,0 +1,59 @@
+- name: gather os specific variables for package
+  ansible.builtin.include_vars: "{{ item }}"
+  with_first_found:
+    - package/{{ ansible_distribution|lower }}.yaml
+    - package/{{ ansible_os_family|lower }}.yaml
+    - package/default.yaml
+  tags:
+    - facts
+- name: install firewalld
+  ansible.builtin.include_role:
+    name: utils/os/package/manager
+
+- name: disable ufw
+  community.general.ufw:
+    state: disabled
+- name: disable ufw service
+  ansible.builtin.systemd:
+    name: ufw
+    enabled: false
+    state: stopped
+
+- name: reset firewalld
+  include: reset.yaml
+  when: firewall_frontend_reset | default(False, True)
+
+- name: setup services
+  ansible.builtin.template:
+    src: services.xml.j2
+    dest: /etc/firewalld/services/{{ item.name }}.xml
+    mode: "0640"
+    owner: root
+    group: root
+  loop: "{{ firewalld_services }}"
+
+- name: setup direct rules
+  ansible.builtin.template:
+    src: direct.xml.j2
+    dest: /etc/firewalld/direct.xml
+    mode: "0640"
+    owner: root
+    group: root
+
+- name: list default zones
+  ansible.builtin.find:
+    paths: /usr/lib/firewalld/zones/
+    file_type: file
+    patterns: "*.xml"
+  register: _firewalld_default_zones
+- name: add default zones to firewalld_zones
+  set_fact:
+    firewalld_zones: "{{ firewalld_zones | default([], True) | union(_firewalld_default_zones.files | map(attribute='path') | map('basename') | map('replace', '.xml', '')) | unique }}"
+
+- name: setup default zone
+  include: firewalld/zone.yaml
+- name: setup zones
+  include: firewalld/zone.yaml
+  loop: "{{ firewalld_zones }}"
+  loop_control:
+    loop_var: _zone_name
