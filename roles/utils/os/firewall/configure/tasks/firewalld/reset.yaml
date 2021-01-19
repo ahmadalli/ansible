@@ -2,11 +2,11 @@
   ansible.builtin.file:
     path: /etc/firewalld/{{ item }}
     state: absent
-  with_nested:
-    - - icmptypes
-      - ipsets
-      - services
-      - zones
+  loop:
+    - icmptypes
+    - ipsets
+    - services
+    - zones
 - name: create config directories
   ansible.builtin.file:
     path: /etc/firewalld/{{ item }}
@@ -14,11 +14,11 @@
     group: root
     mode: "0755"
     state: directory
-  with_nested:
-    - - icmptypes
-      - ipsets
-      - services
-      - zones
+  loop:
+    - icmptypes
+    - ipsets
+    - services
+    - zones
 - name: remove direct configs
   file:
     state: absent
