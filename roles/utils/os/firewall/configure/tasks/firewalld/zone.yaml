@@ -2,7 +2,7 @@
   set_fact:
     _config_key: "{{ 'zone_' + _zone_name if (_zone_name | default('', True) | length > 0) else 'default_zone' }}"
     _is_default_zone: "{{ _zone_name | default('', True) | length == 0 }}"
-    _zone_value: "{{ omit if _is_default_zone else _zone_name }}"
+    _zone_value: "{{ omit if _zone_name | default('', True) | length == 0 else _zone_name }}"
 
 - name: set zone configuration facts
   set_fact:
