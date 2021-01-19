@@ -36,13 +36,18 @@
 - name: remove redundant sources
   set_fact:
     _sources: "{{ _sources | difference(_redundant_sources) }}"
-
-- name: ensure zone is present
-  ansible.posix.firewalld:
-    zone: drop
-    state: present
-    permanent: yes
+- name: create zone
   when: not _is_default_zone
+  block:
+    - name: ensure zone is present
+      ansible.posix.firewalld:
+        zone: drop
+        state: present
+        permanent: yes
+    - name: reload firewalld
+      systemd:
+        name: firewalld
+        state: reloaded
 
 - name: add interfaces
   ansible.posix.firewalld:
