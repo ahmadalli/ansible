@@ -23,6 +23,7 @@
     path: /etc/firewalld/direct.xml
   ignore_errors: yes
 - name: reload firewalld
-  ansible.builtin.systemd:
-    name: firewalld
-    state: reloaded
+  command: firewall-cmd --complete-reload
+  register: _firewalld_reload_result
+  failed_when: _firewalld_reload_result.rc > 0
+  changed_when: _firewalld_reload_result == 0
