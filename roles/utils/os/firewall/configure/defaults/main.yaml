@@ -8,8 +8,7 @@ firewall_frontend_reset: false
 firewalld_zones: []
 
 # https://firewalld.org/documentation/man-pages/firewalld.service.html
-firewalld_services:
-  []
+firewalld_services: []
   # - name:
   #   short_name:
   #   description:
