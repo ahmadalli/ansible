@@ -2,7 +2,6 @@
   set_fact:
     _config_key: "{{ 'zone_' + _zone_name if (_zone_name | default('', True) | length > 0) else 'default_zone' }}"
     _is_default_zone: "{{ _zone_name | default('', True) | length == 0 }}"
-    _zone_value: "{{ omit if _zone_name | default('', True) | length == 0 else _zone_name }}"
 
 - name: set zone configuration facts
   set_fact:
@@ -48,7 +47,7 @@
 
 - name: add interfaces
   ansible.posix.firewalld:
-    zone: "{{ _zone_value }}"
+    zone: "{{ _zone_name | default(omit) }}"
     interface: "{{ item }}"
     state: enabled
     permanent: yes
@@ -57,7 +56,7 @@
 
 - name: add sources
   ansible.posix.firewalld:
-    zone: "{{ _zone_value }}"
+    zone: "{{ _zone_name | default(omit) }}"
     source: "{{ item }}"
     state: enabled
     permanent: yes
@@ -66,7 +65,7 @@
 
 - name: add ports
   ansible.posix.firewalld:
-    zone: "{{ _zone_value }}"
+    zone: "{{ _zone_name | default(omit) }}"
     port: "{{ item }}"
     state: enabled
     permanent: yes
@@ -75,7 +74,7 @@
 
 - name: add services
   ansible.posix.firewalld:
-    zone: "{{ _zone_value }}"
+    zone: "{{ _zone_name | default(omit) }}"
     service: "{{ item }}"
     state: enabled
     permanent: yes
@@ -84,7 +83,7 @@
 
 - name: add rich rules
   ansible.posix.firewalld:
-    zone: "{{ _zone_value }}"
+    zone: "{{ _zone_name | default(omit) }}"
     rich_rule: "{{ item }}"
     state: enabled
     permanent: yes
@@ -93,7 +92,7 @@
 
 - name: setup firewalld_zone_public_masquerade
   ansible.posix.firewalld:
-    zone: "{{ _zone_value }}"
+    zone: "{{ _zone_name | default(omit) }}"
     masquerade: yes
     state: enabled
     permanent: yes
