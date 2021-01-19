@@ -31,7 +31,6 @@
     owner: root
     group: root
   loop: "{{ firewalld_services }}"
-
 - name: setup direct rules
   ansible.builtin.template:
     src: direct.xml.j2
@@ -39,6 +38,10 @@
     mode: "0640"
     owner: root
     group: root
+- name: reload firewalld
+  systemd:
+    name: firewalld
+    state: reloaded
 
 - name: list default zones
   ansible.builtin.find:
