@@ -1,17 +1,24 @@
-- name: clear configs
+- name: remove config directories
   ansible.builtin.file:
-    path: /etc/firewalld/{{ item[0] }}
-    owner: root
-    group: root
-    mode: "0755"
-    state: "{{ item[1] }}"
+    path: /etc/firewalld/{{ item }}
+    state: absent
   with_nested:
     - - icmptypes
       - ipsets
       - services
       - zones
-    - - absent
-      - directory
+- name: create config directories
+  ansible.builtin.file:
+    path: /etc/firewalld/{{ item }}
+    owner: root
+    group: root
+    mode: "0755"
+    state: directory
+  with_nested:
+    - - icmptypes
+      - ipsets
+      - services
+      - zones
 - name: remove direct configs
   file:
     state: absent
