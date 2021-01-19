@@ -41,7 +41,7 @@
   block:
     - name: ensure zone is present
       ansible.posix.firewalld:
-        zone: drop
+        zone: "{{ _zone_name | mandatory }}"
         state: present
         permanent: yes
     - name: reload firewalld
