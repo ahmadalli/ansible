@@ -8,9 +8,34 @@
   set_fact:
     _interfaces: "{{ hostvars[host]['firewalld_zone_' + _config_key + '_interfaces'] | default([], True) | unique }}"
     _sources: "{{ hostvars[host]['firewalld_zone_' + _config_key + '_sources'] | default([], True) | unique }}"
+    _source_hosts: "{{ hostvars[host]['firewalld_zone_' + _config_key + '_source_hosts'] | default([], True) | unique }}"
     _ports: "{{ hostvars[host]['firewalld_zone_' + _config_key + '_ports'] | default([], True) | unique }}"
     _services: "{{ hostvars[host]['firewalld_zone_' + _config_key + '_services'] | default([], True) | unique }}"
     _rich_rules: "{{ hostvars[host]['firewalld_zone_' + _config_key + '_rich_rules'] | default([], True) | unique }}"
+
+- name: add _source_hosts to sources
+  set_fact:
+    _sources: "{{
+      _sources |
+      union(
+        query('inventory_hostnames', (_source_hosts | default([inventory_hostname], True)) |
+        map('extract', hostvars) |
+        map(attribute='ansible_host') |
+        difference([ansible_host])
+      ) }}"
+- name: remove non-ip values from sources
+  set_fact:
+    _sources: "{{ _sources | ansible.netcommon.ipaddr }}"
+- name: make all sources subnet
+  set_fact:
+    _sources: "{{ _sources | map('ansible.netcommon.ipsubnet') }}"
+- name: generate redundant sources list
+  set_fact:
+    _redundant_sources: "{{ _redundant_sources | default([], True) | union(_sources | ansible.netcommon.ipaddr(item) | difference([item])) | unique }}"
+  loop: "{{ _sources }}"
+- name: remove redundant sources
+  set_fact:
+    _sources: "{{ _sources | difference(_redundant_sources) }}"
 
 - name: ensure zone is present
   ansible.posix.firewalld:

@@ -45,6 +45,8 @@ firewalld_direct_passthroughs: []
 # default zone configs
 firewalld_default_zone_interfaces: []
 firewalld_default_zone_sources: []
+# list of inventory hosts/groups to be added to the zone
+firewalld_default_zone_source_hosts: []
 firewalld_default_zone_ports: []
 firewalld_default_zone_services: []
 firewalld_default_zone_rich_rules: []
@@ -54,6 +56,8 @@ firewalld_default_zone_masquerade: false
 # replace 'public' with any zone you want
 firewalld_zone_public_interfaces: []
 firewalld_zone_public_sources: []
+# list of inventory hosts/groups to be added to the zone
+firewalld_zone_public_source_hosts: []
 firewalld_zone_public_ports: []
 firewalld_zone_public_services: []
 firewalld_zone_public_rich_rules: []
