@@ -10,9 +10,8 @@
       - ipsets
       - services
       - zones
-  loop:
-    - absent
-    - directory
+    - - absent
+      - directory
 - name: remove direct configs
   file:
     state: absent
