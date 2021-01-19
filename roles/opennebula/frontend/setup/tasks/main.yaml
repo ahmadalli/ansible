@@ -29,8 +29,8 @@
 - name: install gems
   shell: /usr/share/one/install_gems --yes
   register: __install_gems
-  failed_when: __install_gems.rc > 0
-  changed_when: __install_gems == 0
+  failed_when: __install_gems.rc != 0
+  changed_when: __install_gems.rc == 0
 - name: setup glusterfs volume mount
   ansible.builtin.include_role:
     name: glusterfs/mount

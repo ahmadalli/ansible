@@ -22,10 +22,10 @@
 - name: test netplan configs
   command: netplan generate
   register: netplan_generate
-  failed_when: netplan_generate.rc > 0
-  changed_when: netplan_generate == 0
+  failed_when: netplan_generate.rc != 0
+  changed_when: netplan_generate.rc == 0
 - name: apply configs
   command: netplan apply
   register: netplan_apply
-  failed_when: netplan_apply.rc > 0
-  changed_when: netplan_apply == 0
+  failed_when: netplan_apply.rc != 0
+  changed_when: netplan_apply.rc == 0
