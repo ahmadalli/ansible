@@ -1,39 +1,35 @@
-<!-- https://firewalld.org/documentation/man-pages/firewalld.service.html -->
 <?xml version="1.0" encoding="utf-8"?>
+<!-- https://firewalld.org/documentation/man-pages/firewalld.service.html -->
 <service>
-  {% if item.short_name | default('', True) | length > 0 %}
+  {%- if item.short_name | default('', True) | length > 0 %}
   <short>{{ item.short_name }}/short>
-  {% endif %}
-  {% if item.description | default('', True) | length > 0 %}
+  {%- endif %}
+  {%- if item.description | default('', True) | length > 0 %}
   <description>{{ item.description }}</description>
-  {% endif %}
-  {% for port in item.ports | default([], True) %}
+  {%- endif %}
+  {%- for port in item.ports | default([], True) %}
   <port
-    port="{{ port.port | mandatory }}"
-    {% if port.protocol | default('', True) | length > 0 %}
-    protocol="{{ port.protocol }}"
-    {% endif %}
+    port="{{ port.port | default('', true) }}"
+    protocol="{{ port.protocol | mandatory }}"
   />
-  {% endfor %}
-  {% for protocol in item.protocols | default([], True) %}
+  {%- endfor %}
+  {%- for protocol in item.protocols | default([], True) %}
   <protocol value="{{ protocol }}"/>
-  {% endfor %}
-  {% for source_port in item.source_ports | default([], True) %}
+  {%- endfor %}
+  {%- for source_port in item.source_ports | default([], True) %}
   <source-port
-    port="{{ source_port.port | mandatory }}"
-    {% if source_port.protocol | default('', True) | length > 0 %}
-    protocol="{{ source_port.protocol }}"
-    {% endif %}
+    port="{{ source_port.port | default('', true) }}"
+    protocol="{{ source_port.protocol | mandatory }}"
   />
-  {% endfor %}
-  {% if item.destination.ipv4 | default('', True) | length > 0 or item.destination.ipv6 | default('', True) | length > 0 %}
+  {%- endfor %}
+  {%- if item.destination.ipv4 | default('', True) | length > 0 or item.destination.ipv6 | default('', True) | length > 0 %}
   <destination
-    {% if item.destination.ipv4 | default('', True) | length > 0 %}
+    {%- if item.destination.ipv4 | default('', True) | length > 0 %}
     ipv4="{{ item.destination.ipv4 }}"
-    {% endif %}
-    {% if item.destination.ipv6 | default('', True) | length > 0 %}
+    {%- endif %}
+    {%- if item.destination.ipv6 | default('', True) | length > 0 %}
     ipv6="{{ item.destination.ipv6 }}"
-    {% endif %}
+    {%- endif %}
     />
-  {% endif %}
+  {%- endif %}
 </service>
