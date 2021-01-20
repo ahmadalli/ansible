@@ -12,6 +12,5 @@ collections:
 
 ## Roadmap
 
-### Github
-
-- deploy workflow must depend on test workflow
+- add proper documentations
+- test before deploy on tags
