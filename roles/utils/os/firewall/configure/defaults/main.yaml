@@ -50,6 +50,7 @@ firewalld_default_zone_ports: []
 firewalld_default_zone_services: []
 firewalld_default_zone_rich_rules: []
 firewalld_default_zone_masquerade: false
+firewalld_default_zone_target:
 
 # other zone configs
 # replace 'public' with any zone you want
@@ -61,3 +62,4 @@ firewalld_zone_public_ports: []
 firewalld_zone_public_services: []
 firewalld_zone_public_rich_rules: []
 firewalld_zone_public_masquerade: false
+firewalld_zone_public_target:

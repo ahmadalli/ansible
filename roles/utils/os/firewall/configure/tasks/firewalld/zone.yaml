@@ -12,6 +12,7 @@
     _services: "{{ lookup('vars', 'firewalld_' + _config_key + '_services', default=[]) | unique }}"
     _rich_rules: "{{ lookup('vars', 'firewalld_' + _config_key + '_rich_rules', default=[]) | unique }}"
     _masquerade: "{{ lookup('vars', 'firewalld_' + _config_key + '_masquerade', default=false) }}"
+    _target: "{{ lookup('vars', 'firewalld_' + _config_key + '_target', default='') }}"
 - name: add _source_hosts to sources
   set_fact:
     _sources: "{{
@@ -102,3 +103,20 @@
     immediate: yes
   when: _masquerade
 
+# todo: use `target` field when ansible.posix v1.2 was released.
+# checkout https://github.com/ansible-collections/ansible.posix/issues/130 for more info
+- name: setup target
+  when: _target | length > 0
+  vars:
+    __zone_param: "{{ '--zone='+_zone_name if _zone_name | default('', true) | length > 0 else '' }}"
+  block:
+    - name: get target status
+      command: 'firewall-cmd --permanent {{ __zone_param }} --get-target'
+      changed_when: false
+      register: __current_target
+    - name: set target
+      command: 'firewall-cmd --permanent {{ __zone_param }} --set-target={{ _target }}'
+      when:
+        - __current_target.stdout is defined
+        - __current_target.stdout != _target | default('default')
+      notify: reload firewalld
