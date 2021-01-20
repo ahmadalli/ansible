@@ -1,4 +1,4 @@
-opennebula_frontend_oned_configs_database_backend: mysql
+opennebula_frontend_oned_configs_database_backend: sqlite # opennebula 5.12 seems to fail to start with mysql
 
 opennebula_frontend_oned_configs_database_mysql_server: "{{ '127.0.0.1' if mysql_bind_address == '0.0.0.0' else mysql_bind_address }}"
 opennebula_frontend_oned_configs_database_mysql_port: "{{ mysql_port | int }}"
