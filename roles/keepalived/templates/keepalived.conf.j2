@@ -1,0 +1,31 @@
+{% for vrrp_script in keepalived_vrrp_scripts %}
+vrrp_script {{ vrrp_script.name }} {
+   script "{{ vrrp_script.store_path }}"
+   interval {{ vrrp_script.interval }}
+   fall {{ vrrp_script.fall }}
+   rise {{ vrrp_script.rise }}
+}
+
+{% endfor %}
+{% for vrrp_instance in keepalived_vrrp_instances %}
+vrrp_instance {{ vrrp_instance.name }} {
+  interface {{ vrrp_instance.interface }}
+  virtual_router_id {{ vrrp_instance.virtual_router_id | default((range(1, 255) | random(seed=vrrp_instance.name)), true) }}
+  virtual_ipaddress {
+    {{ vrrp_instance.virtual_ipaddress }}
+  }
+{% if vrrp_instance.name in keepalived_vrrp_instance_priorities %}
+  priority {{ keepalived_vrrp_instance_priorities[vrrp_instance.name] }}
+{% endif %}
+{% if vrrp_instance.track_script | default('', True) | length > 0 %}
+  track_script {
+      {{ vrrp_instance.track_script }}
+  }
+{% endif %}
+  authentication {
+    auth_type PASS
+    auth_pass {{ vrrp_instance.password }}
+  }
+}
+
+{% endfor %}

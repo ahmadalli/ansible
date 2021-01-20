@@ -1,0 +1,17 @@
+keepalived_vrrp_scripts: []
+  # - name:
+  #   script:
+  #   store_path:
+  #   interval: 1   # checks every 1 seconds
+  #   fall: 1       # requires 1 failures for KO
+  #   rise: 1       # requires successes for OK switch
+keepalived_vrrp_instances: []
+  # - name:
+  #   interface:
+  #   virtual_router_id: # this is mandatory and will be set to (hopefully) unique id between 1 and 255
+  #   virtual_ipaddress:
+  #   track_script:
+  #   password:
+# the default priority is 100 on keepalived. you should set it more than 100 on specific host if you want to make that node master.
+keepalived_vrrp_instance_priorities: {}
+  # <instance name>: priority

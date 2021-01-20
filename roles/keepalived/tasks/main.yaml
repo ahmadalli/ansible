@@ -1,0 +1,34 @@
+- name: gather os specific variables
+  ansible.builtin.include_vars: "{{ item }}"
+  with_first_found:
+    - "{{ ansible_distribution|lower }}.yaml"
+    - "{{ ansible_os_family|lower }}.yaml"
+    - default.yaml
+  tags:
+    - facts
+- name: install keepalived
+  ansible.builtin.include_role:
+    name: utils/os/package/manager
+
+- name: configure vrrp_scripts
+  block:
+    - name: create vrrp_script directory
+      file:
+        path: "{{ item.store_path | dirname }}"
+        state: directory
+        mode: "0755"
+        recurse: yes
+    - name: fill in vrrp_script
+      copy:
+        dest: "{{ item.store_path }}"
+        directory_mode: "0755"
+        content: "{{ item.script }}"
+        mode: "0755"
+  loop: "{{ keepalived_vrrp_scripts }}"
+
+- name: configure keepalived
+  template:
+    dest: /etc/keepalived/keepalived.conf
+    src: keepalived.conf.j2
+    mode: "0644"
+  notify: restart keepalived

@@ -1,0 +1,12 @@
+_package_repo_key_info:
+  ansible_module: ansible.builtin.apt_key
+  repo_keys: []
+
+_package_repo_info:
+  ansible_module: ansible.builtin.apt_repository
+  repos: []
+
+_package_info:
+  ansible_module: ansible.builtin.apt
+  packages:
+    - name: keepalived
