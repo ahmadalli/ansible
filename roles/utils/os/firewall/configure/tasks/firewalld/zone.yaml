@@ -11,7 +11,7 @@
     _ports: "{{ lookup('vars', 'firewalld_' + _config_key + '_ports', default=[]) | unique }}"
     _services: "{{ lookup('vars', 'firewalld_' + _config_key + '_services', default=[]) | unique }}"
     _rich_rules: "{{ lookup('vars', 'firewalld_' + _config_key + '_rich_rules', default=[]) | unique }}"
-
+    _masquerade: "{{ lookup('vars', 'firewalld_' + _config_key + '_masquerade', default=false) }}"
 - name: add _source_hosts to sources
   set_fact:
     _sources: "{{
@@ -94,11 +94,12 @@
     immediate: yes
   loop: "{{ _rich_rules }}"
 
-- name: setup firewalld_zone_public_masquerade
+- name: setup masquerade
   ansible.posix.firewalld:
     zone: "{{ _zone_name | default(omit, true) }}"
     masquerade: yes
     state: enabled
     permanent: yes
     immediate: yes
-  when: firewalld_zone_public_masquerade | default(false, true)
+  when: _masquerade
+
