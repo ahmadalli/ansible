@@ -109,13 +109,13 @@
     state: present
     manage_dir: no
 - name: list current nodes
-  delegate_to: "{{ opennebula_frontend[0] }}"
+  delegate_to: "{{ groups['opennebula_frontend'][0] }}"
   shell: onehost list --csv | cut -d',' -f2 | sed 1d
   register: __current_nodes
   failed_when: __current_nodes.rc != 0
   changed_when: false
 - name: add node to cluster
-  delegate_to: "{{ opennebula_frontend[0] }}"
+  delegate_to: "{{ groups['opennebula_frontend'][0] }}"
   command: onehost create {{ inventory_hostname }} --im kvm --vm kvm
   when:
     - __current_nodes.stdout_lines is defined
