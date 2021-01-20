@@ -13,5 +13,6 @@ collections:
 ## Roadmap
 
 - add retry to tasks which are retriable
+- add tags
 - add proper documentations
 - test before deploy on tags
