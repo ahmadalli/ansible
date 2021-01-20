@@ -110,6 +110,10 @@
   vars:
     __zone_param: "{{ '--zone='+_zone_name if _zone_name | default('', true) | length > 0 else '' }}"
   block:
+    - name: assert target value
+      assert:
+        that:
+          - _target in ['default', 'ACCEPT', 'DROP', 'REJECT']
     - name: get target status
       command: 'firewall-cmd --permanent {{ __zone_param }} --get-target'
       changed_when: false
