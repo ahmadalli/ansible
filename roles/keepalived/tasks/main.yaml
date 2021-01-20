@@ -11,20 +11,10 @@
     name: utils/os/package/manager
 
 - name: configure vrrp_scripts
-  block:
-    - name: create vrrp_script directory
-      file:
-        path: "{{ item.store_path | dirname }}"
-        state: directory
-        mode: "0755"
-        recurse: yes
-    - name: fill in vrrp_script
-      copy:
-        dest: "{{ item.store_path }}"
-        directory_mode: "0755"
-        content: "{{ item.script }}"
-        mode: "0755"
+  include: vrrp_script.yaml
   loop: "{{ keepalived_vrrp_scripts }}"
+  loop_control:
+    loop_var: _vrrp_script
 
 - name: configure keepalived
   template:

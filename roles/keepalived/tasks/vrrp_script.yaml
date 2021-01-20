@@ -1,0 +1,12 @@
+- name: create vrrp_script directory
+  file:
+    path: "{{ _vrrp_script.store_path | dirname }}"
+    state: directory
+    mode: "0755"
+    recurse: yes
+- name: fill in vrrp_script
+  copy:
+    dest: "{{ _vrrp_script.store_path }}"
+    directory_mode: "0755"
+    content: "{{ _vrrp_script.script }}"
+    mode: "0755"
