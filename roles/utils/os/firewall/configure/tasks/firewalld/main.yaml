@@ -24,6 +24,8 @@
   when: firewall_frontend_reset | default(False, true)
 
 - name: setup services
+  tags:
+    - services
   ansible.builtin.template:
     src: services.xml.j2
     dest: /etc/firewalld/services/{{ item.name }}.xml
@@ -32,6 +34,8 @@
     group: root
   loop: "{{ firewalld_services }}"
 - name: setup direct rules
+  tags:
+    - direct
   ansible.builtin.template:
     src: direct.xml.j2
     dest: /etc/firewalld/direct.xml
@@ -39,6 +43,9 @@
     owner: root
     group: root
 - name: reload firewalld
+  tags:
+    - services
+    - direct
   systemd:
     name: firewalld
     state: reloaded
