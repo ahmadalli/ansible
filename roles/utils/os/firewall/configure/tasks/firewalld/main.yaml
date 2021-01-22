@@ -52,6 +52,9 @@
     name: firewalld
     state: reloaded
 
+- name: list configured zones
+  set_fact:
+    _firewalld_zones: "{{ query('varnames', '^firewalld_zone_.+_setup$') | map('regex_replace', '^firewalld_zone_(.+)_setup$', '\\1') }}"
 - name: list default zones
   ansible.builtin.find:
     paths: /usr/lib/firewalld/zones/
@@ -60,13 +63,14 @@
   register: _firewalld_default_zones
 - name: add default zones to firewalld_zones
   set_fact:
-    firewalld_zones: "{{ firewalld_zones | default([], true) | union(_firewalld_default_zones.files | map(attribute='path') | map('basename') | map('replace', '.xml', '')) | unique }}"
+    _firewalld_zones: "{{ _firewalld_zones | default([], true) | union(_firewalld_default_zones.files | map(attribute='path') | map('basename') | map('replace', '.xml', '')) | unique }}"
 
 - name: setup default zone
   include: firewalld/zone.yaml
 - name: setup zones
   include: firewalld/zone.yaml
-  loop: "{{ firewalld_zones }}"
+  when: lookup('vars', 'firewalld_zone_' + _zone_name + '_setup', default=false)
+  loop: "{{ _firewalld_zones }}"
   loop_control:
     loop_var: _zone_name
 

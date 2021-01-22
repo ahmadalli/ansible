@@ -4,9 +4,6 @@ firewall_frontend_reset: false
 
 # Firewalld Configurations
 
-# list of zones in addition to default zones
-firewalld_zones: []
-
 # https://firewalld.org/documentation/man-pages/firewalld.service.html
 # each firewalld_services_<name> represents one firewalld service
 # firewalld_services_dummy:
@@ -54,8 +51,11 @@ firewalld_default_zone_masquerade: false
 # should be one of these: default, ACCEPT, DROP, REJECT
 firewalld_default_zone_target:
 
-# other zone configs
-# replace 'public' with any zone you want
+# zone configurations
+# replace 'public' with any zone you want.
+# the zone would be created if it's not already present
+# firewalld_zone_<name>_setup should be true for zone setup.
+firewalld_zone_public_setup: false
 firewalld_zone_public_interfaces: []
 firewalld_zone_public_sources: []
 # list of inventory hosts/groups to be added to the zone
