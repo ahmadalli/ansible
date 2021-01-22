@@ -13,7 +13,7 @@ collections:
 
 ## Roadmap
 
-- decouple this repo into different collections of roles
+- decouple this repo into different collections and roles
 - add retry to tasks which are retriable
 - add tags
 - add proper documentations
