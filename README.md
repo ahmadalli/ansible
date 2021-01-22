@@ -1,6 +1,5 @@
 # Common Ansible Collection
 
-ansible roles and playbooks I use daily.
 
 ## Dependencies
 
@@ -12,6 +11,7 @@ collections:
 
 ## Roadmap
 
+- decouple this repo into different collections of roles
 - add retry to tasks which are retriable
 - add tags
 - add proper documentations
