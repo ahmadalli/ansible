@@ -9,7 +9,7 @@ firewalld_zones: []
 
 # https://firewalld.org/documentation/man-pages/firewalld.service.html
 firewalld_services: []
-  # - name:
+  # <name>:
   #   short_name:
   #   description:
   #   ports: []

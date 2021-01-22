@@ -28,11 +28,11 @@
     - services
   ansible.builtin.template:
     src: services.xml.j2
-    dest: /etc/firewalld/services/{{ item.name }}.xml
+    dest: /etc/firewalld/services/{{ item.key }}.xml
     mode: "0640"
     owner: root
     group: root
-  loop: "{{ firewalld_services }}"
+  loop: "{{ firewalld_services | dict2items }}"
 - name: setup direct rules
   tags:
     - direct
