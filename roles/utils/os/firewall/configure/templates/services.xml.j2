@@ -1,34 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- https://firewalld.org/documentation/man-pages/firewalld.service.html -->
 <service>
-{% if item.value.short_name | default('', True) | length > 0 %}
-  <short>{{ item.value.short_name }}</short>
+{% if _firewalld_service.short_name | default('', True) | length > 0 %}
+  <short>{{ _firewalld_service.short_name }}</short>
 {% endif %}
-{% if item.value.description | default('', True) | length > 0 %}
-  <description>{{ item.value.description }}</description>
+{% if _firewalld_service.description | default('', True) | length > 0 %}
+  <description>{{ _firewalld_service.description }}</description>
 {% endif %}
-{% for port in item.value.ports | default([], True) %}
+{% for port in _firewalld_service.ports | default([], True) %}
   <port
     port="{{ port.port | default('', true) }}"
     protocol="{{ port.protocol | mandatory }}"
   />
 {% endfor %}
-{% for protocol in item.value.protocols | default([], True) %}
+{% for protocol in _firewalld_service.protocols | default([], True) %}
   <protocol value="{{ protocol }}"/>
 {% endfor %}
-{% for source_port in item.value.source_ports | default([], True) %}
+{% for source_port in _firewalld_service.source_ports | default([], True) %}
   <source-port
     port="{{ source_port.port | default('', true) }}"
     protocol="{{ source_port.protocol | mandatory }}"
   />
 {% endfor %}
-{% if item.value.destination.ipv4 | default('', True) | length > 0 or item.value.destination.ipv6 | default('', True) | length > 0 %}
+{% if _firewalld_service.destination.ipv4 | default('', True) | length > 0 or _firewalld_service.destination.ipv6 | default('', True) | length > 0 %}
   <destination
-{% if item.value.destination.ipv4 | default('', True) | length > 0 %}
-    ipv4="{{ item.value.destination.ipv4 }}"
+{% if _firewalld_service.destination.ipv4 | default('', True) | length > 0 %}
+    ipv4="{{ _firewalld_service.destination.ipv4 }}"
 {% endif %}
-{% if item.value.destination.ipv6 | default('', True) | length > 0 %}
-    ipv6="{{ item.value.destination.ipv6 }}"
+{% if _firewalld_service.destination.ipv6 | default('', True) | length > 0 %}
+    ipv6="{{ _firewalld_service.destination.ipv6 }}"
 {% endif %}
     />
 {% endif %}

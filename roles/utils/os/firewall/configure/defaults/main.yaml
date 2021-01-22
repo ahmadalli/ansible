@@ -8,20 +8,21 @@ firewall_frontend_reset: false
 firewalld_zones: []
 
 # https://firewalld.org/documentation/man-pages/firewalld.service.html
-firewalld_services: []
-  # <name>:
-  #   short_name:
-  #   description:
-  #   ports: []
-  #     # - port:
-  #     #   protocol:
-  #   protocols: []
-  #   source_ports: []
-  #     # - port:
-  #     #   protocol:
-  #   destination:
-  #     ipv4:
-  #     ipv6:
+# each firewalld_services_<name> represents one firewalld service
+# firewalld_services_dummy:
+#   name:
+#   short_name:
+#   description:
+#   ports: []
+#     # - port:
+#     #   protocol:
+#   protocols: []
+#   source_ports: []
+#     # - port:
+#     #   protocol:
+#   destination:
+#     ipv4:
+#     ipv6:
 
 # https://firewalld.org/documentation/man-pages/firewalld.direct.html
 # note: if a rich rule can be used, then they should always be preferred over direct rules
