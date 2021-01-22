@@ -30,7 +30,7 @@
     _firewalld_service: "{{ lookup('vars', item) }}"
   ansible.builtin.template:
     src: services.xml.j2
-    dest: /etc/firewalld/services/{{ item.key }}.xml
+    dest: /etc/firewalld/services/{{ _firewalld_service.name }}.xml
     mode: "0640"
     owner: root
     group: root
