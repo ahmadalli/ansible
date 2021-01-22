@@ -1,3 +1,5 @@
+**this repo doesn't have an stable release yet and variables might change in new minor versions**
+
 # Common Ansible Collection
 
 
