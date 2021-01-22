@@ -11,6 +11,10 @@ roles:
 collections:
 ```
 
+## Assumptions
+
+the roles in this collection assume that the private ip would be defined on `ip` variable of each host, if necessary.
+
 ## Roadmap
 
 - decouple this repo into different collections and roles
