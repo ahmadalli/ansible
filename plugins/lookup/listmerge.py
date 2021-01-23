@@ -42,7 +42,7 @@ class LookupModule(LookupBase):
                     var = myvars['hostvars'][myvars['inventory_hostname']][var_name]
                 except KeyError:
                     raise AnsibleUndefinedVariable(
-                        'No variable found with this name: {}}'.format(var_name))
+                        'No variable found with this name: {}'.format(var_name))
             if var is None:
                 continue
 
