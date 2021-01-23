@@ -40,6 +40,9 @@ firewalld_direct_passthroughs: []
 
 
 # default zone configs
+# each of these following list configs could be extended by adding a suffix to them.
+# so that you can have multiple configurations in different groups and each host
+# will have all of them
 firewalld_default_zone_interfaces: []
 firewalld_default_zone_sources: []
 # list of inventory hosts/groups to be added to the zone

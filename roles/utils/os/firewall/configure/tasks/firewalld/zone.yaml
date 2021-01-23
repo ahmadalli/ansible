@@ -5,12 +5,12 @@
 
 - name: set zone configuration facts
   set_fact:
-    _interfaces: "{{ lookup('vars', 'firewalld_' + _config_key + '_interfaces', default=[]) | unique }}"
-    _sources: "{{ lookup('vars', 'firewalld_' + _config_key + '_sources', default=[]) | unique }}"
-    _source_hosts: "{{ lookup('vars', 'firewalld_' + _config_key + '_source_hosts', default=[]) | unique }}"
-    _ports: "{{ lookup('vars', 'firewalld_' + _config_key + '_ports', default=[]) | unique }}"
-    _services: "{{ lookup('vars', 'firewalld_' + _config_key + '_services', default=[]) | unique }}"
-    _rich_rules: "{{ lookup('vars', 'firewalld_' + _config_key + '_rich_rules', default=[]) | unique }}"
+    _interfaces: "{{ query('ahmadalli.ansible.listmerge', 'firewalld_' + _config_key + '_interfaces') | unique }}"
+    _sources: "{{ query('ahmadalli.ansible.listmerge', 'firewalld_' + _config_key + '_sources') | unique }}"
+    _source_hosts: "{{ query('ahmadalli.ansible.listmerge', 'firewalld_' + _config_key + '_source_hosts') | unique }}"
+    _ports: "{{ query('ahmadalli.ansible.listmerge', 'firewalld_' + _config_key + '_ports') | unique }}"
+    _services: "{{ query('ahmadalli.ansible.listmerge', 'firewalld_' + _config_key + '_services') | unique }}"
+    _rich_rules: "{{ query('ahmadalli.ansible.listmerge', 'firewalld_' + _config_key + '_rich_rules') | unique }}"
     _masquerade: "{{ lookup('vars', 'firewalld_' + _config_key + '_masquerade', default=false) }}"
     _target: "{{ lookup('vars', 'firewalld_' + _config_key + '_target', default='') }}"
 - name: add _source_hosts to sources
