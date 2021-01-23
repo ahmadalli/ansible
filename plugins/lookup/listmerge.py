@@ -28,7 +28,7 @@ class LookupModule(LookupBase):
                 raise AnsibleError('Invalid setting identifier, "{}" is not a string, its a {}'.format(
                     term, type(term).__name__))
             var_names.extend(
-                [x for x in variables.keys() if x.startswith(key)])
+                [x for x in myvars.keys() if x.startswith(term)])
 
         if len(var_names) == 0:
             return None
