@@ -31,7 +31,7 @@ class LookupModule(LookupBase):
                 [x for x in myvars.keys() if x.startswith(term)])
 
         if len(var_names) == 0:
-            return None
+            return []
 
         result = []
         for var_name in var_names:
