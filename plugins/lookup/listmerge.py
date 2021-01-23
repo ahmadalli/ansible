@@ -48,9 +48,10 @@ class LookupModule(LookupBase):
 
             if isinstance(var, list):
                 for value in var:
-                    result.append(self._templar.template(value, fail_on_undefined=True))
+                    result.append(self._templar.template(
+                        value, fail_on_undefined=True))
             else:
                 raise AnsibleError(
-                    'variables should be of type list. {} is of type {}'.format(var_names[0]))
+                    'variables should be of type list. {} is of type {}'.format(var_name, type(var).__name__))
 
         return result
