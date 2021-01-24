@@ -1,7 +1,7 @@
 - name: install docker-compose
   get_url:
     dest: /usr/local/bin/docker-compose
-    url: https://github.com/docker/compose/releases/latest/download/docker-compose-{{ansible_system}}-{{ansible_userspace_architecture}}
+    url: https://github.com/docker/compose/releases/{{ docker_compose_version | default('latest', true) }}/download/docker-compose-{{ansible_system}}-{{ansible_userspace_architecture}}
     mode: 755
   register: _binary_download_result
   until: "'OK' in _binary_download_result.msg or 'file already exists' in _binary_download_result.msg"
