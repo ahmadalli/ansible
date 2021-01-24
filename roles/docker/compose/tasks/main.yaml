@@ -1,14 +1,25 @@
 - name: set url facts
   ansible.builtin.include_vars: urls.yaml
+- name: get checksum
+  uri:
+    url: "{{ _docker_compose_checksum_url }}"
+    return_content: true
+  register: _docker_compose_checksum_request
+- name: set checksum fact
+  set_fact:
+    _docker_compose_checksum: "{{ _docker_compose_checksum_request.content.split(' ')[0] }}"
+
 - name: install docker-compose
   ansible.builtin.get_url:
     dest: /usr/local/bin/docker-compose
     url: "{{ _docker_compose_download_url }}"
+    checksum: sha256:{{ _docker_compose_checksum }}
     mode: 755
   register: _binary_download_result
   until: "'OK' in _binary_download_result.msg or 'file already exists' in _binary_download_result.msg"
   retries: 4
   delay: 5
+
 - name: setup docker-compose bash completion
   ansible.builtin.get_url:
     dest: /etc/bash_completion.d/docker-compose

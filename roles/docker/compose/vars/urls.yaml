@@ -1,2 +1,3 @@
 _docker_compose_download_url: https://github.com/docker/compose/releases/{{ 'latest/download' if docker_compose_version | default('latest', true) == 'latest' else 'download/' + docker_compose_version }}/docker-compose-{{ansible_system}}-{{ansible_userspace_architecture}}
+_docker_compose_checksum_url: "{{ _docker_compose_download_url }}.sha256"
 _docker_compose_bash_completion_download_url: https://raw.githubusercontent.com/docker/compose/{{ 'master' if docker_compose_version | default('latest', true) == 'latest' else docker_compose_version }}/contrib/completion/bash/docker-compose
