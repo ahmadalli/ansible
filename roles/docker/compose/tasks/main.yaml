@@ -1,7 +1,7 @@
 - name: set url facts
   ansible.builtin.include_vars: urls.yaml
 - name: install docker-compose
-  get_url:
+  ansible.builtin.get_url:
     dest: /usr/local/bin/docker-compose
     url: "{{ _docker_compose_download_url }}"
     mode: 755
@@ -10,7 +10,7 @@
   retries: 4
   delay: 5
 - name: setup docker-compose bash completion
-  get_url:
+  ansible.builtin.get_url:
     dest: /etc/bash_completion.d/docker-compose
     url: "{{ _docker_compose_bash_completion_download_url }}"
     mode: 755
