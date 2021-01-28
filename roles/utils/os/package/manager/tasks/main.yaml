@@ -16,7 +16,7 @@
 - name: ensure packages are installed
   action: "{{ _package_info.ansible_module }}"
   args:
-    pkg: "{{ item.name }}"
+    pkg: "{{ item.name | default(omit) }}"
     force: "{{ item.force | default(omit) }}"
     conf_file: "{{ item.yum_conf | default(omit) }}"
     state: "{{ item.state | default('present') }}"
