@@ -1,0 +1,13 @@
+_package_repo_key_info:
+  ansible_module: ansible.builtin.apt_key
+  repo_keys: []
+
+_package_repo_info:
+  ansible_module: ansible.builtin.apt
+  repos: []
+
+_package_info:
+  ansible_module: ansible.builtin.apt
+  packages:
+    - deb: https://repo.percona.com/apt/percona-release_latest.generic_all.deb
+    - name: percona-xtradb-cluster
