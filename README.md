@@ -24,3 +24,4 @@ the roles in this collection assume that the private ip would be defined on `ip`
 - add tags
 - add proper documentations
 - test before deploy on tags
+- use namespaces for all modules
