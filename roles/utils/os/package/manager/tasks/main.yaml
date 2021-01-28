@@ -22,4 +22,5 @@
     state: "{{ item.state | default('present') }}"
     update_cache: "{{ omit if ansible_distribution == 'Fedora' else True }}"
     enablerepo: "{{ item.repo | default(omit) }}"
+    deb: "{{ item.deb | default(omit) }}"
   loop: "{{ _package_info.packages | default([], true) }}"
