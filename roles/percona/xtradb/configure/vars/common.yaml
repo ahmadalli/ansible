@@ -1,0 +1,9 @@
+percona_xtradb_cluster_host_ips: >
+  [
+    {% for host in query('inventory_hostnames', percona_xtradb_cluster_inventory_group_name) %}
+    "{{ hostvars[host]['ip'] | default(hostvars[host]['ansible_host'], true) }}"
+    {% if not loop.last %},{% endif %}
+    {% endfor %}
+  ]
+
+percona_xtradb_cluster_server_id: "{{ groups[percona_xtradb_cluster_inventory_group_name].index(inventory_hostname) + 1 }}"

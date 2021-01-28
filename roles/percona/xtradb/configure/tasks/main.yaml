@@ -1,0 +1,26 @@
+---
+- name: set comman facts
+  ansible.builtin.include_vars: common.yaml
+- name: copy keys
+  include: copy-key.yaml
+  loop:
+    - ca-key.pem
+    - ca.pem
+    - server-key.pem
+    - server-cert.pem
+  loop_control:
+    loop_var: _key
+- name: write mysqld configuration files
+  template:
+    src: mysqld-{{ percona_xtradb_cluster_version }}.conf.j2
+    dest: /etc/mysql/mysql.conf.d/mysqld.cnf
+    owner: root
+    group: root
+    mode: "0644"
+- name: write wsrep configuration files
+  template:
+    src: wsrep-{{ percona_xtradb_cluster_version }}.conf.j2
+    dest: /etc/mysql/mysql.conf.d/wsrep.cnf
+    owner: root
+    group: root
+    mode: "0644"

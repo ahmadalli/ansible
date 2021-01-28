@@ -1,0 +1,14 @@
+---
+- name: get key
+  slurp:
+    src: /var/lib/mysql/{{ _key | mandatory }}
+  register: _key_slurp
+  when: inventory_hostname == groups[percona_xtradb_cluster_inventory_group_name][0]
+- name: write key
+  copy:
+    dest: /var/lib/mysql/{{ _key | mandatory }}
+    content: "{{ _key_slurp['content'] | b64decode }}"
+  delegate_to: "{{ item }}"
+  delegate_facts: true
+  loop: "{{ groups[percona_xtradb_cluster_inventory_group_name][1:] }}"
+  when: inventory_hostname == groups[percona_xtradb_cluster_inventory_group_name][0]

@@ -1,0 +1,14 @@
+# Template my.cnf for PXC
+# Edit to your requirements.
+[client]
+socket=/var/run/mysqld/mysqld.sock
+
+[mysqld]
+server-id={{ percona_xtradb_cluster_server_id }}
+datadir=/var/lib/mysql
+socket=/var/run/mysqld/mysqld.sock
+log-error=/var/log/mysql/error.log
+pid-file=/var/run/mysqld/mysqld.pid
+
+# Binary log expiration period is 604800 seconds, which equals 7 days
+binlog_expire_logs_seconds=604800

@@ -1,0 +1,6 @@
+percona_xtradb_cluster_version: "8.0"
+
+percona_xtradb_cluster_name: pxc-cluster
+# name of the inventory group containing the pxc nodes
+percona_xtradb_cluster_inventory_group_name:
+
