@@ -7,6 +7,11 @@
 - name: install dependencies
   ansible.builtin.include_role:
     name: utils/os/package/manager
+- name: setup repositories
+  command: "{{ item }}"
+  loop:
+    - percona-release enable-only pxc-80 release
+    - percona-release enable tools release
 - name: gather os specific variables for dependencies packages
   ansible.builtin.include_vars: "{{ item }}"
   with_first_found:

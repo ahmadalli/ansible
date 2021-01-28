@@ -11,3 +11,4 @@ _package_info:
   packages:
     - name: gnupg2
     - name: lsb-release
+    - deb: https://repo.percona.com/apt/percona-release_latest.generic_all.deb
