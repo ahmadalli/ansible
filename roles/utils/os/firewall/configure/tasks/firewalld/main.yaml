@@ -63,6 +63,8 @@
     file_type: file
     patterns: "*.xml"
   register: _firewalld_default_zones
+  tags:
+    - facts
 - name: add default zones to firewalld_zones
   set_fact:
     _firewalld_zones: "{{ _firewalld_zones | default([], true) | union(_firewalld_default_zones.files | map(attribute='path') | map('basename') | map('replace', '.xml', '')) | unique }}"
