@@ -9,6 +9,8 @@
       dns: "{{ docker_daemon_configs_dns | default([], true) }}"
       log-driver: "{{ docker_daemon_configs_log_driver | default('json-file') }}"
       log-opts: "{{ docker_daemon_configs_log_opts | default({}, true) }}"
+  tags:
+    - facts
 - name: create docker configs directory
   file:
     path: /etc/docker

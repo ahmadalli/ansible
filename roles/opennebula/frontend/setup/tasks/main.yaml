@@ -6,6 +6,8 @@
 - name: add required package
   set_fact:
     opennebula_frontend_packages: "{{ opennebula_frontend_packages | union(['ruby-bundler']) }}"
+  tags:
+    - facts
 - name: gather os specific variables
   ansible.builtin.include_vars: "{{ item }}"
   with_first_found:

@@ -2,6 +2,8 @@
   set_fact:
     _config_key: "{{ 'zone_' + _zone_name if (_zone_name | default('', true) | length > 0) else 'default_zone' }}"
     _is_default_zone: "{{ _zone_name | default('', true) | length == 0 }}"
+  tags:
+    - facts
 
 - name: set zone configuration facts
   set_fact:
@@ -13,6 +15,9 @@
     _rich_rules: "{{ query('ahmadalli.ansible.listmerge', 'firewalld_' + _config_key + '_rich_rules') | unique }}"
     _masquerade: "{{ lookup('vars', 'firewalld_' + _config_key + '_masquerade', default=false) }}"
     _target: "{{ lookup('vars', 'firewalld_' + _config_key + '_target', default='') }}"
+  tags:
+    - facts
+
 - name: add _source_hosts to sources
   set_fact:
     _sources: "{{
@@ -24,19 +29,29 @@
         difference([ansible_host])
       ) |
       unique }}"
+  tags:
+    - facts
 - name: remove non-ip values from sources
   set_fact:
     _sources: "{{ _sources | ansible.netcommon.ipaddr }}"
+  tags:
+    - facts
 - name: make all sources subnet
   set_fact:
     _sources: "{{ _sources | map('ansible.netcommon.ipsubnet') }}"
+  tags:
+    - facts
 - name: generate redundant sources list
   set_fact:
     _redundant_sources: "{{ _redundant_sources | default([], true) | union(_sources | ansible.netcommon.ipaddr(item) | difference([item])) | unique }}"
+  tags:
+    - facts
   loop: "{{ _sources }}"
 - name: remove redundant sources
   set_fact:
     _sources: "{{ _sources | difference(_redundant_sources) }}"
+  tags:
+    - facts
 
 - name: ensure zone is present
   ansible.posix.firewalld:

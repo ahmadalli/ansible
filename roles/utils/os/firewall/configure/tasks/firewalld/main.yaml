@@ -55,6 +55,8 @@
 - name: list configured zones
   set_fact:
     _firewalld_zones: "{{ query('varnames', '^firewalld_zone_.+_setup$') | map('regex_replace', '^firewalld_zone_(.+)_setup$', '\\1') }}"
+  tags:
+    - facts
 - name: list default zones
   ansible.builtin.find:
     paths: /usr/lib/firewalld/zones/
@@ -64,6 +66,8 @@
 - name: add default zones to firewalld_zones
   set_fact:
     _firewalld_zones: "{{ _firewalld_zones | default([], true) | union(_firewalld_default_zones.files | map(attribute='path') | map('basename') | map('replace', '.xml', '')) | unique }}"
+  tags:
+    - facts
 
 - name: setup default zone
   include: firewalld/zone.yaml

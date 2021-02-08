@@ -8,6 +8,8 @@
 - name: set checksum fact
   set_fact:
     _docker_compose_checksum: "{{ _docker_compose_checksum_request.content.split(' ')[0] }}"
+  tags:
+    - facts
 
 - name: install docker-compose
   ansible.builtin.get_url:

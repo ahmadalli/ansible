@@ -68,6 +68,8 @@
 - name: propagate authorized key
   set_fact:
     opennebula_frontend_authorized_key: "{{ frontend_public_key['content'] | b64decode }}"
+  tags:
+    - facts
   delegate_to: "{{ item }}"
   delegate_facts: true
   with_items: "{{ groups['opennebula_node'] }}"
