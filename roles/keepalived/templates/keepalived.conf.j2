@@ -1,4 +1,4 @@
-{% for vrrp_script in keepalived_vrrp_scripts %}
+{% for vrrp_script in query('ahmadalli.ansible.listmerge', 'keepalived_vrrp_scripts') %}
 vrrp_script {{ vrrp_script.name }} {
    script "{{ vrrp_script.store_path }}"
    interval {{ vrrp_script.interval }}
@@ -7,7 +7,7 @@ vrrp_script {{ vrrp_script.name }} {
 }
 
 {% endfor %}
-{% for vrrp_instance in keepalived_vrrp_instances %}
+{% for vrrp_instance in query('ahmadalli.ansible.listmerge', 'keepalived_vrrp_instances') %}
 vrrp_instance {{ vrrp_instance.name }} {
   interface {{ vrrp_instance.interface }}
   virtual_router_id {{ vrrp_instance.virtual_router_id | default((range(1, 255) | random(seed=vrrp_instance.name)), true) }}

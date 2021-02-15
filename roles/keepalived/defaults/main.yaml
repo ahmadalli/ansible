@@ -1,3 +1,4 @@
+# you can have multiple `keepalived_vrrp_scripts` by adding suffixes to this variable
 keepalived_vrrp_scripts: []
   # - name:
   #   script:
@@ -5,6 +6,7 @@ keepalived_vrrp_scripts: []
   #   interval: 1   # checks every 1 seconds
   #   fall: 1       # requires 1 failures for KO
   #   rise: 1       # requires successes for OK switch
+# you can have multiple `keepalived_vrrp_instances` by adding suffixes to this variable
 keepalived_vrrp_instances: []
   # - name:
   #   interface:

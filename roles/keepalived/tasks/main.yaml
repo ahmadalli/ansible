@@ -12,7 +12,7 @@
 
 - name: configure vrrp_scripts
   include: vrrp_script.yaml
-  loop: "{{ keepalived_vrrp_scripts }}"
+  loop: "{{ query('ahmadalli.ansible.listmerge', 'keepalived_vrrp_scripts') }}"
   loop_control:
     loop_var: _vrrp_script
 
