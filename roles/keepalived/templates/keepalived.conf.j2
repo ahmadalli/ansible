@@ -1,9 +1,9 @@
 {% for vrrp_script in query('ahmadalli.ansible.listmerge', 'keepalived_vrrp_scripts') %}
 vrrp_script {{ vrrp_script.name }} {
-   script "{{ vrrp_script.store_path }}"
-   interval {{ vrrp_script.interval }}
-   fall {{ vrrp_script.fall }}
-   rise {{ vrrp_script.rise }}
+  script "{{ vrrp_script.store_path }}"
+  interval {{ vrrp_script.interval }}
+  fall {{ vrrp_script.fall }}
+  rise {{ vrrp_script.rise }}
 }
 
 {% endfor %}
