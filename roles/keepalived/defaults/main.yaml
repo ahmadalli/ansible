@@ -12,6 +12,7 @@ keepalived_vrrp_instances: []
   #   interface:
   #   virtual_router_id: # this is mandatory and will be set to (hopefully) unique id between 1 and 255
   #   virtual_ipaddress:
+  #   priority: 250
   #   track_script:
   #   password:
 # the default priority is 100 on keepalived. you should set it more than 100 on specific host if you want to make that node master.

@@ -16,6 +16,8 @@ vrrp_instance {{ vrrp_instance.name }} {
   }
 {% if vrrp_instance.name in keepalived_vrrp_instance_priorities %}
   priority {{ keepalived_vrrp_instance_priorities[vrrp_instance.name] }}
+{% elif 'priority' in vrrp_instance %}
+  priority {{ vrrp_instance.priority }}
 {% endif %}
 {% if vrrp_instance.track_script | default('', True) | length > 0 %}
   track_script {
