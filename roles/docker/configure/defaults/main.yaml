@@ -11,3 +11,8 @@ docker_systemd_unit_overrides_file: "{{ docker_systemd_unit_overrides_directory 
 docker_systemd_unit_manage_overrides: false
 # each element should contain bash-style env definition e.g. key=value
 docker_systemd_unit_env: []
+
+docker_registry_authentications: []
+  # - registry_url: (optional)
+  #   username:
+  #   password:

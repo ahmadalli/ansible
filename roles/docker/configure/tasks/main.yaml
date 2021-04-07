@@ -58,3 +58,13 @@
         owner: root
         group: root
         mode: "0644"
+- name: login in registries
+  when: docker_registry_authentications | default([], true) | length > 0
+  block:
+    - name: make sure docker pip is present
+      vars:
+        pip_install_packages:
+          - name: docker[tls]
+      include_role:
+        name: geerlingguy.pip
+    - name: login in registry

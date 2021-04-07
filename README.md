@@ -10,6 +10,7 @@ since python 2 is deprecated, only python 3 is supported
 ```yaml
 roles:
   - src: geerlingguy.mysql
+  - src: geerlingguy.pip
 collections:
 ```
 
