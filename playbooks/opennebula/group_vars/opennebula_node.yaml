@@ -1,2 +1,2 @@
-opennebula_datastore_lvm_device:
+opennebula_datastore_lvm_devices:
   - /dev/sdb
