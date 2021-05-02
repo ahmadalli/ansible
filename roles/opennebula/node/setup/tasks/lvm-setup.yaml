@@ -1,0 +1,26 @@
+---
+- name: get lvm disk stats
+  community.general.parted:
+    device: "{{ _lvm_device }}"
+    unit: MB
+    state: info
+  register: lvm_info
+- name: check disk
+  when: lvm_info.partitions | length > 0
+  block:
+    - name: check if partition has filesystem
+      when: lvm_info.partitions[0].fstype | length > 0
+      ansible.builtin.fail:
+        msg: |
+          the disk is already partitioned and {{ _lvm_device }}1 has filesystem
+    - name: check if partition has lvm flag
+      when: "'lvm' not in lvm_info.partitions[0].flags"
+      ansible.builtin.fail:
+        msg: |
+          the disk is already partitioned but {{ _lvm_device }}1 doesn't have lvm flag
+- name: create lvm parition
+  community.general.parted:
+    device: "{{ _lvm_device }}"
+    number: 1
+    flags: [lvm]
+    state: present
