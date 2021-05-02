@@ -79,7 +79,7 @@
     msg: |
       opennebula_datastore_lvm_devices must be set
 - name: setup lvm disks
-  include: vrrp_script.yaml
+  include: lvm-setup.yaml
   loop: "{{ opennebula_datastore_lvm_devices }}"
   loop_control:
     loop_var: _lvm_device
