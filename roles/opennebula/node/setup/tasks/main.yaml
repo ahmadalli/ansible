@@ -97,6 +97,15 @@
   register: __current_nodes
   failed_when: __current_nodes.rc != 0
   changed_when: false
+- name: propagate node hosts to /etc/hosts on frontend
+  delegate_to: "{{ groups['opennebula_frontend'][0] }}"
+  ansible.builtin.blockinfile:
+    path: /etc/hosts
+    marker: "# {mark} ANSIBLE MANAGED BLOCK nebula nodes"
+    block: |
+      {% for host in groups['opennebula_node'] %}
+      {{ hostvars[host]['ip'] | default(hostvars[host]['ansible_host'] , true) }} {{ host }}
+      {% endfor %}
 - name: add node to cluster
   tags:
     - add-node
