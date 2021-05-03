@@ -64,5 +64,3 @@
 - name: configure opennebula
   include_role:
     name: opennebula/frontend/configure
-  tags:
-    - facts
