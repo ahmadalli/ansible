@@ -69,6 +69,7 @@
   register: frontend_public_key
 - name: propagate authorized key
   set_fact:
+    cacheable: true
     opennebula_frontend_authorized_key: "{{ frontend_public_key['content'] | b64decode }}"
   tags:
     - facts
