@@ -62,11 +62,6 @@
     group: oneadmin
     follow: no
     state: link
-- name: config lvm to disable lvmetad
-  ansible.builtin.lineinfile:
-    path: /etc/lvm/lvm.conf
-    regexp: use_lvmetad =.*
-    line: use_lvmetad = 0
 - name: disable and stop lvmetad
   ansible.builtin.systemd:
     name: lvm2-lvmetad.service
