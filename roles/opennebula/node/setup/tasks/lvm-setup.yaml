@@ -18,9 +18,3 @@
       ansible.builtin.fail:
         msg: |
           the disk is already partitioned but {{ _lvm_device }}1 doesn't have lvm flag
-- name: create lvm parition
-  community.general.parted:
-    device: "{{ _lvm_device }}"
-    number: 1
-    flags: [lvm]
-    state: present
