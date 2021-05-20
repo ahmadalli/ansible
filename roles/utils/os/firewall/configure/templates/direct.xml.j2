@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- https://firewalld.org/documentation/man-pages/firewalld.direct.html -->
 <direct>
-  {% for chain in firewalld_direct_chains %}
+  {% for chain in query('ahmadalli.ansible.listmerge', 'firewalld_direct_chains') %}
   <chain
     ipv="{{ chain.ipv | mandatory }}"
     table="{{ chain.table | mandatory }}"
     chain="{{ chain.chain | mandatory }}"
     />
   {% endfor %}
-  {% for rule in firewalld_direct_rules %}
+  {% for rule in query('ahmadalli.ansible.listmerge', 'firewalld_direct_rules') %}
   <rule
     ipv="{{ rule.ipv | mandatory }}"
     table="{{ rule.table | mandatory }}"
@@ -17,7 +17,7 @@
       {{ rule.args | mandatory }}
     </rule>
   {% endfor %}
-  {% for passthrough in firewalld_direct_passthroughs %}
+  {% for passthrough in query('ahmadalli.ansible.listmerge', 'firewalld_direct_passthroughs') %}
   <passthrough
     ipv="{{ passthrough.ipv | mandatory }}">
       {{ passthrough.args | mandatory }}
