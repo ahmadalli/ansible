@@ -23,7 +23,13 @@
   until: "'OK' in _binary_download_result.msg or 'file already exists' in _binary_download_result.msg"
   retries: 4
   delay: 5
-
+- name: make sure /etc/bash_completion.d exists
+  ansible.builtin.file:
+    path: /etc/bash_completion.d
+    state: directory
+    mode: '0755'
+    owner: root
+    group: root
 - name: setup docker-compose bash completion
   ansible.builtin.get_url:
     dest: /etc/bash_completion.d/docker-compose
