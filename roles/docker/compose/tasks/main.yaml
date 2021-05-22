@@ -16,7 +16,7 @@
     dest: /usr/local/bin/docker-compose
     url: "{{ _docker_compose_download_url }}"
     checksum: sha256:{{ _docker_compose_checksum }}
-    mode: '0755'
+    mode: "0755"
     owner: root
     group: root
   register: _binary_download_result
@@ -28,14 +28,14 @@
   ansible.builtin.file:
     path: /etc/bash_completion.d
     state: directory
-    mode: '0755'
+    mode: "0755"
     owner: root
     group: root
 - name: setup docker-compose bash completion
   ansible.builtin.get_url:
     dest: /etc/bash_completion.d/docker-compose
     url: "{{ _docker_compose_bash_completion_download_url }}"
-    mode: '0755'
+    mode: "0755"
     owner: root
     group: root
   register: _completion_download_result
