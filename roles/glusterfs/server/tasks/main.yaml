@@ -9,6 +9,13 @@
 - name: install gluster server package
   ansible.builtin.include_role:
     name: utils/os/package/manager
+- name: make sure /etc/bash_completion.d exists
+  ansible.builtin.file:
+    path: /etc/bash_completion.d
+    state: directory
+    mode: "0755"
+    owner: root
+    group: root
 - name: bash-completion
   get_url:
     url: https://raw.githubusercontent.com/gluster/glusterfs/release-{{ glusterfs_ppa_version }}/extras/command-completion/gluster.bash
