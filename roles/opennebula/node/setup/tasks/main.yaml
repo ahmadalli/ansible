@@ -31,7 +31,7 @@
 # https://wiki.libvirt.org/page/Networking#Creating_network_initscripts
 - name: disable netfilter on bridges
   ansible.posix.sysctl:
-    sysctl_file: /etc/sysctl.d/0-opennebula-bridge-nf-call.conf
+    sysctl_file: /etc/sysctl.d/90-opennebula-bridge-nf-call.conf
     name: "{{ item }}"
     reload: yes
     value: "0"
