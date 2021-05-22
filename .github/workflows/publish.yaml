@@ -10,7 +10,7 @@ jobs:
       - name: get the version from the tag
         id: get_version
         run: echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\//}
-      - uses: docker://ghcr.io/artis3n/ansible_galaxy_collection:v2.4.1
+      - uses: artis3n/ansible_galaxy_collection@v2
         with:
           api_key: '${{ secrets.GALAXY_API_KEY }}'
           galaxy_version: '${{ steps.get_version.outputs.VERSION }}'
