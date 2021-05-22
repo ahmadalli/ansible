@@ -23,6 +23,7 @@
   until: "'OK' in _binary_download_result.msg or 'file already exists' in _binary_download_result.msg"
   retries: 4
   delay: 5
+
 - name: make sure /etc/bash_completion.d exists
   ansible.builtin.file:
     path: /etc/bash_completion.d
