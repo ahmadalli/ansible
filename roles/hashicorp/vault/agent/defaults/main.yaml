@@ -1,0 +1,26 @@
+# yaml-language-server: $schema=""
+
+vault_api_address:
+vault_agent_version: 1.7.2
+vault_agent_role_id:
+vault_agent_secret_id:
+
+# it's possible to add prefixes to this like vault_agent_templates_base
+# and vault_agent_templates_group1 in order to merge multiple configs
+vault_agent_templates: []
+  # - name:
+  #   template:
+  #   destination:
+  #     path:
+  #     setup_parent_directory: true
+  #     parent_directory:
+  #       owner:
+  #       group:
+  #       mode:
+  #   perms: "0644"
+  #   command:
+  #   left_delimiter: "[["
+  #   right_delimiter: "]]"
+
+  # should be one of these: `trace`, `debug`, `info`, `warn`, and `err`
+vault_agent_log_level: warn

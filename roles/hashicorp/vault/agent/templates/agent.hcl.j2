@@ -1,0 +1,33 @@
+vault {
+  address = "{{ vault_api_address }}"
+}
+
+auto_auth {
+  method "approle" {
+    config = {
+      role_id_file_path = "/var/local/secrets/vault/role_id"
+      secret_id_file_path = "/var/local/secrets/vault/secret_id"
+      remove_secret_id_file_after_reading = false
+    }
+  }
+}
+
+cache {
+  use_auto_auth_token = true
+}
+
+listener "tcp" {
+  address = "127.0.0.1:8200"
+  tls_disable = true
+}
+
+{% for template in query('ahmadalli.ansible.listmerge', 'vault_agent_templates') %}
+template {
+  source = "/etc/vault/{{ template.name }}.tmpl"
+  destination = "{{ template.destination.path }}"
+  perms = {{ template.perms }}
+  command = "{{ template.command | default("", True) }}"
+  left_delimiter = "{{ template.left_delimiter }}"
+  right_delimiter = "{{ template.right_delimiter }}"
+}
+{% endfor %}

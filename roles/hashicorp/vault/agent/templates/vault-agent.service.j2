@@ -1,0 +1,14 @@
+[Unit]
+Description="Vault Agent"
+
+[Service]
+ExecStart=/usr/local/bin/vault agent -config /etc/vault/agent.hcl -log-level={{ vault_agent_log_level | default("warn", true) }}
+Restart=always
+RestartSec=10
+KillSignal=SIGINT
+SyslogIdentifier=vault-agent
+User=root
+Group=root
+
+[Install]
+WantedBy=multi-user.target

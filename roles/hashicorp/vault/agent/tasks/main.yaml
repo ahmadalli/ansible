@@ -1,0 +1,59 @@
+- name: chack if vault exists
+  stat:
+    path: /usr/local/bin/vault
+  register: _vault_bin_file_stats
+- name: get vault version
+  shell: vault --version
+  register: _vault_version
+  when: _vault_bin_file_stats.stat.exists == true
+- name: download binary
+  unarchive:
+    src: https://releases.hashicorp.com/vault/{{ vault_agent_version }}/vault_{{ vault_agent_version }}_linux_amd64.zip
+    dest: /usr/local/bin
+    mode: 0755
+    remote_src: yes
+  when: _vault_bin_file_stats.stat.exists != true or vault_agent_version not in _vault_version.stdout
+- name: create directories
+  file:
+    path: "{{ item }}"
+    state: directory
+    mode: "0755"
+    owner: root
+    group: root
+  loop:
+    - /etc/vault/
+    - /var/local/secrets/vault/
+- name: fill role_id file if necessary
+  copy:
+    content: "{{ vault_agent_role_id }}"
+    dest: /var/local/secrets/vault/role_id
+  when: vault_agent_role_id | default('', True) | length > 0
+  notify: restart vault agent
+- name: fill secret_id file if necessary
+  copy:
+    content: "{{ vault_agent_secret_id }}"
+    dest: /var/local/secrets/vault/secret_id
+  when: vault_agent_secret_id | default('', True) | length > 0
+  notify: restart vault agent
+- name: write configs
+  template:
+    src: agent.hcl.j2
+    dest: /etc/vault/agent.hcl
+    owner: root
+    group: root
+    mode: "0644"
+  notify: restart vault agent
+- name: fill template files
+  copy:
+    content: "{{item.template}}"
+    dest: /etc/vault/{{item.name}}.tmpl
+  loop: "{{ vault_agent_templates }}"
+  notify: restart vault agent
+- name: setup template destination parent directories
+  include_tasks: setup-template-parent-directory.yaml
+  loop: "{{ vault_agent_templates }}"
+- name: setup systemd unit
+  template:
+    src: vault-agent.service.j2
+    dest: /etc/systemd/system/vault-agent.service
+  notify: restart vault agent

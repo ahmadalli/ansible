@@ -1,0 +1,17 @@
+- name: check if parent directory exists
+  stat:
+    path: "{{ item.destination.path | dirname }}"
+  register: _parent_directory_stats
+- name: error if destination exists but isn't a directory
+  assert:
+    that: not _parent_directory_stats.stat.exists or (_parent_directory_stats.stat.isdir is defined and _parent_directory_stats.stat.isdir)
+    fail_msg: "'{{ item.destination.path | dirname }}' exists but it's not a directory"
+- name: setup parent directory
+  file:
+    path: "{{ item.destination.path | dirname }}"
+    state: directory
+    owner: "{{ item.destination.parent_directory.owner | default ('root', true) }}"
+    group: "{{ item.destination.parent_directory.owner | default ('root', true) }}"
+    mode: "{{ item.destination.parent_directory.mode | default ('0755', true) }}"
+    recurse: yes
+  when: item.destination.setup_parent_directory | default(false, true)
