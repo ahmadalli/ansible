@@ -16,3 +16,4 @@ opennebula_private_gateway:
 opennebula_private_nameservers: []
 
 opennebula_frontend_authorized_key:
+opennebula_add_frontend_authorized_key: true

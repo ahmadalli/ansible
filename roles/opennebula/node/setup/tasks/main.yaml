@@ -89,6 +89,9 @@
     exclusive: yes
     state: present
     manage_dir: no
+  when: |
+    opennebula_add_frontend_authorized_key and
+    (opennebula_frontend_authorized_key | default('', true) | length > 0)
 - name: list current nodes
   tags:
     - add-node
