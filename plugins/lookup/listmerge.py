@@ -1,7 +1,7 @@
 DOCUMENTATION = """
-        lookup: merger
+        lookup: listmerge
         author: ahmadali shafiee <mail@ahmadalli.net>
-        short_description: merges variable starting with some keyword
+        short_description: merges lists starting with some keyword
         description:
             - This lookup returns the result of merging some variables which start witch specific keyword
         options:
