@@ -51,8 +51,9 @@ class LookupModule(LookupBase):
                     if isinstance(var[key], list):
                         if not key in result:
                             result[key] = []
-                        result[key].append(self._templar.template(
-                            var[key], fail_on_undefined=True))
+                        for item in var[key]:
+                            result[key].append(self._templar.template(
+                                item, fail_on_undefined=True))
                     else:
                         raise AnsibleError(
                             'dictionary items should be of type list. {}[{}] is of type {}'.format(var_name, key, type(var[key]).__name__))
