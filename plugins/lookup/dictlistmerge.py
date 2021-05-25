@@ -13,6 +13,9 @@ DOCUMENTATION = """
 from ansible.errors import AnsibleError, AnsibleUndefinedVariable
 from ansible.plugins.lookup import LookupBase
 from ansible.module_utils.six import string_types
+from ansible.utils.display import Display
+
+display = Display()
 
 
 class LookupModule(LookupBase):
@@ -33,13 +36,14 @@ class LookupModule(LookupBase):
         if len(var_names) == 0:
             return []
 
-        result = {}
+        display.vvvv('these vars found: {}'.format(', '.join(var_names)))
+        result={}
         for var_name in var_names:
             try:
-                var = myvars[var_name]
+                var=myvars[var_name]
             except KeyError:
                 try:
-                    var = myvars['hostvars'][myvars['inventory_hostname']][var_name]
+                    var=myvars['hostvars'][myvars['inventory_hostname']][var_name]
                 except KeyError:
                     raise AnsibleUndefinedVariable(
                         'No variable found with this name: {}'.format(var_name))
@@ -50,14 +54,14 @@ class LookupModule(LookupBase):
                 for key in var:
                     if isinstance(var[key], list):
                         if not key in result:
-                            result[key] = []
+                            result[key]=[]
                         for item in var[key]:
+                            display.vvvv('adding {} from {}[{}] to the results'.format(item, var_name, key))
                             result[key].append(self._templar.template(
                                 item, fail_on_undefined=True))
                     else:
                         raise AnsibleError(
                             'dictionary items should be of type list. {}[{}] is of type {}'.format(var_name, key, type(var[key]).__name__))
-
             else:
                 raise AnsibleError(
                     'variables should be of type dict. {} is of type {}'.format(var_name, type(var).__name__))
