@@ -2,7 +2,7 @@
 - name: set comman facts
   ansible.builtin.include_vars: common.yaml
 - name: copy keys
-  include: copy-key.yaml
+  include_tasks: copy-key.yaml
   loop:
     - ca-key.pem
     - ca.pem

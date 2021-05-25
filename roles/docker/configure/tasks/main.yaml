@@ -68,5 +68,5 @@
       include_role:
         name: geerlingguy.pip
     - name: login in registry
-      include: login.yaml
+      include_tasks: login.yaml
       loop: "{{ docker_registry_authentications }}"

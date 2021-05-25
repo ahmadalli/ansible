@@ -20,7 +20,7 @@
       {%   endfor %}
       {% endfor %}
 - name: create mount directory if necessary
-  include: mountpoint.yaml
+  include_tasks: mountpoint.yaml
   loop: "{{ glusterfs_mounts }}"
 - name: mount the mountpoint
   mount:

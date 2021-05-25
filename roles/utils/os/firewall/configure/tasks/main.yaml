@@ -4,4 +4,4 @@
     fail_msg: firewall_frontend either must be "ufw" or "firewalld"
 - name: firewalld setup
   when: firewall_frontend == 'firewalld'
-  include: firewalld/main.yaml
+  include_tasks: firewalld/main.yaml

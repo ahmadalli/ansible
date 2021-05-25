@@ -74,7 +74,7 @@
     msg: |
       opennebula_datastore_lvm_devices must be set
 - name: check lvm disks
-  include: disk-check.yaml
+  include_tasks: disk-check.yaml
   loop: "{{ opennebula_datastore_lvm_devices }}"
   loop_control:
     loop_var: _disk

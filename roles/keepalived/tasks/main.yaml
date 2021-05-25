@@ -11,7 +11,7 @@
     name: utils/os/package/manager
 
 - name: configure vrrp_scripts
-  include: vrrp_script.yaml
+  include_tasks: vrrp_script.yaml
   loop: "{{ query('ahmadalli.ansible.listmerge', 'keepalived_vrrp_scripts') }}"
   loop_control:
     loop_var: _vrrp_script
