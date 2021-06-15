@@ -1,0 +1,55 @@
+- name: load the latest version of php-fpm_exporter
+  uri:
+    url: https://api.github.com/repos/hipages/php-fpm_exporter/releases/latest
+    return_content: true
+  register: _latest_release_info
+- name: download php-fpm_exporter
+  loop: "{{ _latest_release_info.json.assets }}"
+  when: "'linux_amd64' in item.name"
+  get_url:
+    url: "{{ item.browser_download_url }}"
+    dest: /usr/local/bin/php-fpm_exporter
+    mode: "0755"
+    owner: root
+    group: root
+- name: setup systemd unit
+  copy:
+    content: |
+      [Unit]
+      Description=php-fpm_exporter
+      After=network-online.target
+      StartLimitInterval=0
+      StartLimitIntervalSec=0
+
+      [Service]
+      Type=simple
+      User=www-data
+      Group=www-data
+      ExecStart=/usr/local/bin/php-fpm_exporter \
+        server \
+        --phpfpm.scrape-uri={{ php_fpm_exporter_scrape_uri }} \
+        --phpfpm.fix-process-count=true
+      SyslogIdentifier=php-fpm_exporter
+      Restart=always
+      RestartSec=5
+
+      CapabilityBoundingSet=CAP_NET_RAW
+      AmbientCapabilities=CAP_NET_RAW
+
+      LimitNOFILE=65000
+      LockPersonality=true
+      NoNewPrivileges=true
+      MemoryDenyWriteExecute=true
+      PrivateDevices=true
+      PrivateTmp=true
+      ProtectHome=true
+      RemoveIPC=true
+      RestrictSUIDSGID=true
+
+      ProtectSystem=full
+
+
+      [Install]
+      WantedBy=multi-user.target
+    dest: /etc/systemd/system/php-fpm_exporter.service
+  notify: restart php-fpm_exporter

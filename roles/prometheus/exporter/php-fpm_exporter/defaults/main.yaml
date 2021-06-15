@@ -1,0 +1,1 @@
+php_fpm_exporter_scrape_uri: unix:///run/php/php<php-version>-fpm.sock;/status
