@@ -2,14 +2,15 @@
 - name: set comman facts
   ansible.builtin.include_vars: common.yaml
 - name: copy keys
-  include_tasks: copy-key.yaml
+  synchronize:
+    src: /var/lib/mysql/{{ item }}
+    dest: /var/lib/mysql/{{ item }}
+  delegate_to: "{{ groups[percona_xtradb_cluster_inventory_group_name][0] }}"
   loop:
     - ca-key.pem
     - ca.pem
     - server-key.pem
     - server-cert.pem
-  loop_control:
-    loop_var: _key
 - name: write mysqld configuration files
   template:
     src: mysqld-{{ percona_xtradb_cluster_version }}.conf.j2
