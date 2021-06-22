@@ -5,6 +5,7 @@
   synchronize:
     src: /var/lib/mysql/{{ item }}
     dest: /var/lib/mysql/{{ item }}
+    use_ssh_args: yes
   delegate_to: "{{ groups[percona_xtradb_cluster_inventory_group_name][0] }}"
   loop:
     - ca-key.pem
