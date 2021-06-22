@@ -10,9 +10,9 @@
     _interfaces: "{{ query('ahmadalli.ansible.listmerge', 'firewalld_' + _config_key + '_interfaces') | unique }}"
     _sources: "{{ query('ahmadalli.ansible.listmerge', 'firewalld_' + _config_key + '_sources') | unique }}"
     _source_hosts: "{{ query('ahmadalli.ansible.listmerge', 'firewalld_' + _config_key + '_source_hosts') | unique }}"
-    _ports: "{{ query('ahmadalli.ansible.listmerge', 'firewalld_' + _config_key + '_ports') | unique }}"
-    _services: "{{ query('ahmadalli.ansible.listmerge', 'firewalld_' + _config_key + '_services') | unique }}"
-    _rich_rules: "{{ query('ahmadalli.ansible.listmerge', 'firewalld_' + _config_key + '_rich_rules') | unique }}"
+    _ports: "{{ query('ahmadalli.ansible.listmerge', 'firewalld_' + _config_key + '_ports') | union(firewalld_all_zones_ports | default([], true)) | unique }}"
+    _services: "{{ query('ahmadalli.ansible.listmerge', 'firewalld_' + _config_key + '_services') | union(firewalld_all_zones_services | default([], true)) | | unique }}"
+    _rich_rules: "{{ query('ahmadalli.ansible.listmerge', 'firewalld_' + _config_key + '_rich_rules') | union(firewalld_all_zones_rich_rules | default([], true)) | | unique }}"
     _masquerade: "{{ lookup('vars', 'firewalld_' + _config_key + '_masquerade', default=false) }}"
     _target: "{{ lookup('vars', 'firewalld_' + _config_key + '_target', default='') }}"
   tags:

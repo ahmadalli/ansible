@@ -54,6 +54,11 @@ firewalld_default_zone_masquerade: false
 # should be one of these: default, ACCEPT, DROP, REJECT
 firewalld_default_zone_target:
 
+# these will be added to all zones
+firewalld_all_zones_ports: []
+firewalld_all_zones_services: []
+firewalld_all_zones_rich_rules: []
+
 # zone configurations
 # replace 'public' with any zone you want.
 # the zone would be created if it's not already present
