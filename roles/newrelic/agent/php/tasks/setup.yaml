@@ -1,6 +1,7 @@
-- name: set _php_version fact
+- name: set facts
   set_fact:
-    _php_version: "{{ _php_directory | replace('/etc/php/', '') }}"
+    _php_directory: "{{ _php_directory_stat.path }}"
+    _php_version: "{{ _php_directory_stat.path | replace('/etc/php/', '') }}"
 - name: list php flavors
   ansible.builtin.find:
     paths: "{{ _php_directory }}"

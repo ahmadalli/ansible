@@ -31,4 +31,4 @@
   include_tasks: setup.yaml
   loop: "{{ _php_versions.files }}"
   loop_control:
-    loop_var: _php_directory
+    loop_var: _php_directory_stat
