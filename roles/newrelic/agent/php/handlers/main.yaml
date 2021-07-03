@@ -1,4 +1,5 @@
 - name: restart php-fpm
   ansible.builtin.systemd:
     name: php{{ _php_version }}-fpm.service
+    state: restarted
   when: '"fpm" in (_php_flavors.files | map(attribute="path") | map("basename"))'
