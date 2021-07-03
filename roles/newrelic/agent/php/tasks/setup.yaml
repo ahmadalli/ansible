@@ -6,6 +6,7 @@
   ansible.builtin.find:
     paths: "{{ _php_directory }}"
     file_type: directory
+    excludes: 'mods-available'
     recurse: false
   register: _php_flavors
 - name: remove newrelic.ini from php flavor
