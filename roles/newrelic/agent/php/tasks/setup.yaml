@@ -22,5 +22,6 @@
   ansible.builtin.file:
     src: "{{ _php_directory }}/mods-available/newrelic.ini"
     dest: "{{ item.path }}/conf.d/newrelic.ini"
+    state: link
   loop: "{{ _php_flavors.files }}"
   notify: restart php-fpm
