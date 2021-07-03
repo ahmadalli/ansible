@@ -17,7 +17,6 @@
     dest: /tmp/newrelic-agent
 - name: install newrelic agent
   environment:
-    NR_INSTALL_KEY: '{{ newrelic_agent_php_license }}'
     NR_INSTALL_USE_CP_NOT_LN: "1"
     NR_INSTALL_SILENT: "1"
   shell: /tmp/newrelic-agent/newrelic-php5*/newrelic-install install
