@@ -1,0 +1,33 @@
+- name: delete temp directory
+  ansible.builtin.file:
+    path: /tmp/newrelic-agent
+    state: absent
+- name: create temp directory
+  ansible.builtin.file:
+    path: /tmp/newrelic-agent
+    state: directory
+- name: get download url
+  shell: curl -s https://download.newrelic.com/php_agent/release/ | grep 'linux.tar.gz' | sed -n 's/.*href="\(.*\)".*/\1/p'
+  register: _download_url
+  args:
+    warn: false
+- name: download newrelic agent
+  ansible.builtin.unarchive:
+    src: https://download.newrelic.com{{ _download_url.stdout }}
+    dest: /tmp/newrelic-agent
+- name: install newrelic agent
+  environment:
+    NR_INSTALL_KEY: '{{ newrelic_agent_php_license }}'
+    NR_INSTALL_USE_CP_NOT_LN: "1"
+    NR_INSTALL_SILENT: "1"
+  shell: /tmp/newrelic-agent/newrelic-php5*/newrelic-install install
+- name: list php versions
+  ansible.builtin.find:
+    paths: /etc/php/
+    recurse: false
+  register: _php_versions
+- name: setup newrelic
+  include_tasks: setup.yaml
+  loop: "{{ _php_versions.files }}"
+  loop_control:
+    loop_var: _php_version

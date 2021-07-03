@@ -1,0 +1,20 @@
+- name: list php flavors
+  ansible.builtin.find:
+    paths: /etc/php/{{ _php_version }}
+    recurse: false
+  register: _php_flavors
+- name: remove newrelic.ini from php flavor
+  ansible.builtin.file:
+    path: "{{ item.path }}/conf.d/newrelic.ini"
+    state: absent
+  loop: "{{ _php_flavors.files }}"
+- name: create newrelic.ini from template
+  ansible.builtin.template:
+    src: newrelic.ini.j2
+    dest: "{{ _php_version }}/mods-available/newrelic.ini"
+- name: create symlink from newrelic.ini for each flavor
+  ansible.builtin.file:
+    src: "{{ _php_version }}/mods-available/newrelic.ini"
+    dest: "{{ item.path }}/conf.d/newrelic.ini"
+  loop: "{{ _php_flavors.files }}"
+  notify: restart php-fpm

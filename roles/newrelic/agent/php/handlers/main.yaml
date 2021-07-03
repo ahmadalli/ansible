@@ -1,0 +1,4 @@
+- name: restart php-fpm
+  ansible.builtin.systemd:
+    name: php{{ _php_version }}-fpm.service
+  when: '"/etc/php/{{ _php_version }}/fpm" in _php_flavors.files'
