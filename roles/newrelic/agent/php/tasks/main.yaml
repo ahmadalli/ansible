@@ -24,6 +24,7 @@
 - name: list php versions
   ansible.builtin.find:
     paths: /etc/php/
+    file_type: directory
     recurse: false
   register: _php_versions
 - name: setup newrelic
