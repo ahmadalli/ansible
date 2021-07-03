@@ -18,10 +18,10 @@
   ansible.builtin.template:
     src: newrelic.ini.j2
     dest: "{{ _php_directory }}/mods-available/newrelic.ini"
+  notify: restart php-fpm
 - name: create symlink from newrelic.ini for each flavor
   ansible.builtin.file:
     src: "{{ _php_directory }}/mods-available/newrelic.ini"
     dest: "{{ item.path }}/conf.d/newrelic.ini"
     state: link
   loop: "{{ _php_flavors.files }}"
-  notify: restart php-fpm
