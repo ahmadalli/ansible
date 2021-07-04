@@ -25,8 +25,8 @@
       union(
         query('inventory_hostnames', (_source_hosts | default([inventory_hostname], true))) |
         map('extract', hostvars) |
-        map(attribute='ansible_host') |
-        difference([ansible_host])
+        map(attribute='ansible_host', default='') |
+        difference([ansible_host, ''])
       ) |
       unique }}"
   tags:
