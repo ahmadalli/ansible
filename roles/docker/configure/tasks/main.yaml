@@ -29,11 +29,20 @@
 - name: systemd configs
   when: docker_systemd_unit_env | default([], true) | length > 0
   block:
-    - name: delete old overrides
-      when: docker_systemd_unit_manage_overrides
-      file:
-        path: "{{ docker_systemd_unit_overrides_directory }}"
-        state: absent
+    - name: remote other overrides
+      when: docker_systemd_unit_manage_overrides | default(false, true)
+      block:
+        - name: list current overrides
+          find:
+            paths: "{{ docker_systemd_unit_overrides_directory }}"
+            patterns: "*.conf"
+            file_type: file
+          register: _docker_override_files
+        - name: remove other overrides
+          file:
+            path: "{{ item }}"
+            state: absent
+          loop: "{{ _docker_override_files.files | difference[docker_systemd_unit_overrides_file] }}"
     - name: make sure systemd directory is created
       file:
         path: "{{ docker_systemd_unit_overrides_directory }}"
