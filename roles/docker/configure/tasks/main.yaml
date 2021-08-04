@@ -42,7 +42,7 @@
           file:
             path: "{{ item }}"
             state: absent
-          loop: "{{ _docker_override_files.files | difference[docker_systemd_unit_overrides_file] }}"
+          loop: "{{ _docker_override_files.files | difference([docker_systemd_unit_overrides_file]) }}"
     - name: make sure systemd directory is created
       file:
         path: "{{ docker_systemd_unit_overrides_directory }}"
