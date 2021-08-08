@@ -5,6 +5,7 @@ docker_daemon_configs_iptables: true
 docker_daemon_configs_dns: []
 docker_daemon_configs_log_driver:
 docker_daemon_configs_log_opts: {}
+docker_daemon_configs_feature_buildkit: false
 
 docker_systemd_unit_overrides_directory: /etc/systemd/system/docker.service.d
 docker_systemd_unit_overrides_file: "{{ docker_systemd_unit_overrides_directory }}/ahmadalli-ansible-overrides.conf"
