@@ -1,6 +1,5 @@
 - name: set configuration fact
   set_fact:
-    key_value: dummy # just to make the error go away
     __docker_daemon_configs:
       registry-mirrors: "{{ docker_daemon_configs_registry_mirrors | default([], true) }}"
       insecure-registries: "{{ docker_daemon_configs_insecure_registries | default([], true) }}"
