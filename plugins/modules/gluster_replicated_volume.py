@@ -6,6 +6,59 @@
 import platform
 from ansible.module_utils.basic import AnsibleModule
 
+DOCUMENTATION = '''
+---
+module: glusterfs_replicated_volume
+short_description: Create/Manage GlusterFS Replicated Volumes
+description: This module creates and manages a glusterfs volume which is replicated on all hosts
+version_added: "2.10"
+author:
+  - Taneli Leppä (@rosmo)
+  - Ahmadali Shafiee (@ahmadalli)
+options:
+  name:
+    description:
+      - The volume name.
+    required: true
+    aliases:
+      - volume
+  state:
+    description:
+      - Whether the volume should exist or not.
+    choices: [ "present", "absent", "started", "stopped" ]
+    default: present
+  cluster:
+    description:
+      - List of hosts to use for probing and brick setup
+    default: []
+  host:
+    description:
+      - Override local hostname (for peer probing purposes).
+    default: The local hostname (FQDN)
+  transport:
+    description:
+      - Transport protocol to use for communication with nodes.
+    choices: [ "tcp", "rdma", "tcp,rdma" ]
+    default: tcp
+  bricks:
+    description:
+      - Brick paths on servers. Multiple brick paths can be separated by commas
+    aliases:
+      - brick
+  start_on_create:
+    type: bool
+    description:
+      - Controls whether the volume is started after creation or not, defaults to true.
+    default: true
+  force:
+    type: bool
+    description:
+      - Controls whether to force the operation or not.
+    default: false
+seealso:
+  - module: gluster.gluster.gluster_volume
+'''
+
 from ..module_utils.gluster import GlusterVolumeHelper
 
 
@@ -121,6 +174,7 @@ def main():
     facts['glusterfs'] = {'volumes': volumes}
 
     module.exit_json(changed=changed, ansible_facts=facts)
+
 
 if __name__ == '__main__':
     main()
