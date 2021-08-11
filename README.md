@@ -5,7 +5,18 @@
 
 ## Dependencies
 
-since python 2 is deprecated, only python 3 is supported
+### Python and Ansible
+
+- python 3 is required
+- ansible 4 is not supported
+- jinja2 2.11+ is required
+
+```
+ansible<4.0.0,>=2.10.0
+jinja2>=2.11.0
+```
+
+### Ansible Galaxy Roles
 
 ```yaml
 roles:
