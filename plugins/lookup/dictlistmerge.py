@@ -37,13 +37,13 @@ class LookupModule(LookupBase):
             return []
 
         display.vvvv('these vars found: {}'.format(', '.join(var_names)))
-        result={}
+        result = {}
         for var_name in var_names:
             try:
-                var=myvars[var_name]
+                var = myvars[var_name]
             except KeyError:
                 try:
-                    var=myvars['hostvars'][myvars['inventory_hostname']][var_name]
+                    var = myvars['hostvars'][myvars['inventory_hostname']][var_name]
                 except KeyError:
                     raise AnsibleUndefinedVariable(
                         'No variable found with this name: {}'.format(var_name))
@@ -52,16 +52,18 @@ class LookupModule(LookupBase):
 
             if isinstance(var, dict):
                 for key in var:
-                    if isinstance(var[key], list):
+                    items = self._templar.template(var[key], fail_on_undefined=True)
+                    if isinstance(items, list):
                         if not key in result:
-                            result[key]=[]
-                        for item in var[key]:
-                            display.vvvv('adding {} from {}[{}] to the results'.format(item, var_name, key))
+                            result[key] = []
+                        for item in items:
+                            display.vvvv('adding {} from {}[{}] to the results'.format(
+                                item, var_name, key))
                             result[key].append(self._templar.template(
                                 item, fail_on_undefined=True))
                     else:
                         raise AnsibleError(
-                            'dictionary items should be of type list. {}[{}] is of type {}'.format(var_name, key, type(var[key]).__name__))
+                            'dictionary items should be of type list. {}[{}] is of type {}'.format(var_name, key, type(items).__name__))
             else:
                 raise AnsibleError(
                     'variables should be of type dict. {} is of type {}'.format(var_name, type(var).__name__))
