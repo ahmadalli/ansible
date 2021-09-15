@@ -1,4 +1,4 @@
-opennebula_repo_base_url: https://downloads.opennebula.io/repo/{{ opennebula_frontend_version }}/{{ ansible_distribution }}/{{ ansible_distribution_version }}
+opennebula_repo_base_url: https://downloads.opennebula.io/repo/5.12/{{ ansible_distribution }}/{{ ansible_distribution_version }}
 opennebula_repo_gpgkey: https://downloads.opennebula.io/repo/repo.key
 
 _package_repo_key_info:

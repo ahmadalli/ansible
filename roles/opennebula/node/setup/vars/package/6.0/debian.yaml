@@ -1,0 +1,19 @@
+opennebula_repo_base_url: https://downloads.opennebula.io/repo/6.0/{{ ansible_distribution }}/{{ ansible_distribution_version }}
+opennebula_repo_gpgkey: https://downloads.opennebula.io/repo/repo.key
+
+_package_repo_key_info:
+  ansible_module: ansible.builtin.apt_key
+  repo_keys:
+    - url: "{{ opennebula_repo_gpgkey }}"
+
+_package_repo_info:
+  ansible_module: ansible.builtin.apt_repository
+  repos:
+    - >
+      deb {{ opennebula_repo_base_url }}
+      stable opennebula
+
+_package_info:
+  ansible_module: ansible.builtin.apt
+  packages:
+    - name: opennebula-node-kvm
