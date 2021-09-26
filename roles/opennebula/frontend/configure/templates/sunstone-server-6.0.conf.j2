@@ -273,12 +273,12 @@
 ################################################################################
 # FireEdge
 ################################################################################
-{% if opennebula_sunstone_fireedge_private_endpoint | default('', true) | lenght > 0 %}
+{% if opennebula_sunstone_fireedge_private_endpoint | default('', true) | length > 0 %}
 :private_fireedge_endpoint: http://localhost:2616
 {% else %}
 # :private_fireedge_endpoint:
 {% endif %}
-{% if opennebula_sunstone_fireedge_public_endpoint | default('', true) | lenght > 0 %}
+{% if opennebula_sunstone_fireedge_public_endpoint | default('', true) | length > 0 %}
 :public_fireedge_endpoint: http://localhost:2616
 {% else %}
 # :public_fireedge_endpoint:
