@@ -1,3 +1,5 @@
+opennebula_version: "5.12"
+
 opennebula_frontend_packages:
   - opennebula
   - opennebula-sunstone
