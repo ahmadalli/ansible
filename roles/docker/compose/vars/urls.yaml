@@ -1,3 +1,6 @@
-_docker_compose_download_url: https://github.com/docker/compose/releases/{{ 'latest/download' if docker_compose_version | default('latest', true) == 'latest' else 'download/' + docker_compose_version }}/docker-compose-{{ansible_system}}-{{ansible_userspace_architecture}}
+_docker_composer_v1_file_ending: "{{ansible_system}}-{{ansible_userspace_architecture}}"
+_docker_composer_v2_file_ending: "{{ ansible_system | lower }}-{{ 'amd64'  if ansible_architecture | lower == 'x86_64' else ansible_architecture }}"
+_docker_composer_file_name: docker-compose-{{ _docker_composer_v2_file_ending if (docker_compose_version | default('latest', true) == 'latest') or (docker_compose_version | default('2.0.0', true) is version('2.0', '>=')) else _docker_composer_v1_file_ending }}
+_docker_compose_download_url: https://github.com/docker/compose/releases/{{ 'latest/download' if docker_compose_version | default('latest', true) == 'latest' else 'download/' + docker_compose_version }}/{{ _docker_composer_file_name }}
 _docker_compose_checksum_url: "{{ _docker_compose_download_url }}.sha256"
 _docker_compose_bash_completion_download_url: https://raw.githubusercontent.com/docker/compose/{{ 'master' if docker_compose_version | default('latest', true) == 'latest' else docker_compose_version }}/contrib/completion/bash/docker-compose
