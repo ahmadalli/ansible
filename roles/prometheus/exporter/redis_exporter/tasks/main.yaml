@@ -1,0 +1,74 @@
+- name: load the latest version of redis_exporter
+  uri:
+    url: https://api.github.com/repos/oliver006/redis_exporter/releases/latest
+    return_content: true
+  register: _latest_release_info
+- name: create download temp directory
+  file:
+    path: /tmp/redis_exporter
+    state: directory
+- name: download the latest version of redis_exporter and unzip it in /tmp
+  loop: "{{ _latest_release_info.json.assets }}"
+  when: "'linux-amd64' in item.name"
+  ansible.builtin.unarchive:
+    src: "{{ item.browser_download_url }}"
+    dest: "/tmp/redis_exporter"
+    remote_src: true
+    extra_opts:
+      - --strip-components=1
+- name: move the binary to the correct location
+  copy:
+    src: "/tmp/redis_exporter/redis_exporter"
+    remote_src: true
+    dest: "/usr/local/bin/redis_exporter"
+    owner: root
+    group: root
+    mode: 0755
+- name: cleaup the /tmp directory
+  file:
+    state: absent
+    path: "/tmp/redis_exporter"
+- name: create redis_exporter user
+  user:
+    name: redis_exporter
+    state: present
+    system: true
+- name: create the redis_exporter systemd unit file
+  copy:
+    content: |
+      [Unit]
+      Description=Redis Exporter
+      After=network-online.target
+      StartLimitInterval=0
+      StartLimitIntervalSec=0
+
+      [Service]
+      Type=simple
+      User=redis_exporter
+      Group=redis_exporter
+      ExecStart=/usr/local/bin/redis_exporter \
+        --redis.addr={{ redis_exporter_redis_addr | mandatory }}
+      SyslogIdentifier=redis_exporter
+      Restart=always
+      RestartSec=5
+
+      CapabilityBoundingSet=CAP_NET_RAW
+      AmbientCapabilities=CAP_NET_RAW
+
+      LimitNOFILE=65000
+      LockPersonality=true
+      NoNewPrivileges=true
+      MemoryDenyWriteExecute=true
+      PrivateDevices=true
+      PrivateTmp=true
+      ProtectHome=true
+      RemoveIPC=true
+      RestrictSUIDSGID=true
+
+      ProtectSystem=full
+
+
+      [Install]
+      WantedBy=multi-user.target
+    dest: /etc/systemd/system/redis_exporter.service
+  notify: restart redis_exporter
