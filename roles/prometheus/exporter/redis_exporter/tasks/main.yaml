@@ -47,7 +47,8 @@
       User=redis_exporter
       Group=redis_exporter
       ExecStart=/usr/local/bin/redis_exporter \
-        --redis.addr={{ redis_exporter_redis_addr | mandatory }}
+        --redis.addr={{ redis_exporter_redis_addr | mandatory }} \
+        --redis.password={{ redis_exporter_redis_password | default('""', true) }}
       SyslogIdentifier=redis_exporter
       Restart=always
       RestartSec=5
