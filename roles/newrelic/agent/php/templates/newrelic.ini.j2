@@ -589,7 +589,7 @@ newrelic.daemon.proxy = "{{ newrelic_agent_php_daemon_proxy }}"
 ;          Setting this to "raw" has considerable security implications as it
 ;          can expose sensitive and private customer data.
 ;
-;newrelic.transaction_tracer.record_sql = "obfuscated"
+newrelic.transaction_tracer.record_sql = "{{ newrelic_agent_php_transaction_tracer_record_sql | default('obfuscated', true) }}"
 
 ; Setting: newrelic.transaction_tracer.custom
 ; Type   : string

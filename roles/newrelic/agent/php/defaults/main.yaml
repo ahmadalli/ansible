@@ -1,3 +1,4 @@
 newrelic_agent_php_license:
 newrelic_agent_php_appname:
 newrelic_agent_php_daemon_proxy:
+newrelic_agent_php_transaction_tracer_record_sql: obfuscated
