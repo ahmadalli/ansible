@@ -1,0 +1,14 @@
+{% if opennebula_one_fs_lvm_zero_lvm_on_create %}
+#  Zero LVM volumes on creation or resizing
+ZERO_LVM_ON_CREATE = {{ opennebula_one_fs_lvm_zero_lvm_on_create }}
+{% endif %}
+
+{% if opennebula_one_fs_lvm_zero_lvm_on_delete %}
+#  Zero LVM volumes on delete, when the VM disks are disposed
+ZERO_LVM_ON_DELETE = {{ opennebula_one_fs_lvm_zero_lvm_on_delete }}
+{% endif %}
+
+{% if opennebula_one_fs_lvm_dd_block_size %}
+#  Block size for the dd commands
+DD_BLOCK_SIZE = {{ opennebula_one_fs_lvm_dd_block_size }}
+{% endif %}

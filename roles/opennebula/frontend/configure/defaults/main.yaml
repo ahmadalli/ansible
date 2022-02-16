@@ -33,4 +33,8 @@ opennebula_one_vmm_exec_kvm_config_nic_model:
 opennebula_one_vmm_exec_kvm_config_nic_filter:
 opennebula_one_vmm_exec_kvm_config_nic_override: "{{ opennebula_one_vmm_exec_kvm_config_nic_model | default('', true) | length > 0 or opennebula_one_vmm_exec_kvm_config_nic_filter | default('', true) | length > 0 }}"
 
+opennebula_one_fs_lvm_zero_lvm_on_create:
+opennebula_one_fs_lvm_zero_lvm_on_delete:
+opennebula_one_fs_lvm_dd_block_size:
+
 opennebula_frontend_systemd_unit_overrides_directory: /etc/systemd/system/opennebula.service.d/

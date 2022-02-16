@@ -25,6 +25,13 @@
     mode: "0640"
     owner: root
     group: oneadmin
+- name: fs_lvm config
+  ansible.builtin.template:
+    src: fs_lvm-{{ opennebula_version }}.conf.j2
+    dest: /var/lib/one/remotes/etc/fs_lvm/fs_lvm.conf
+    mode: "0640"
+    owner: root
+    group: oneadmin
 - name: clear systemd overrides
   ansible.builtin.file:
     path: "{{ opennebula_frontend_systemd_unit_overrides_directory }}"
