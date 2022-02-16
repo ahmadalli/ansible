@@ -1,12 +1,23 @@
 opennebula_datastore_system_id: 100
 
-opennebula_public_interface_name:
-opennebula_public_bridge_name:
-opennebula_public_addresses: []
-opennebula_public_gateway:
-
-opennebula_private_interface_name:
-opennebula_private_bridge_name:
-opennebula_private_addresses: []
+opennebula_network_links: []
+  # - interface:
+  #   bridge:
+  #     name:
+  #     parameters:
+  #       stp: false
+  #       forward_delay:
+  #   addresses:
+  #   gateway:
+  #   nameservers:
+  # - interface:
+  #   bridge:
+  #     name:
+  #     parameters:
+  #       stp: false
+  #       forward_delay:
+  #   addresses:
+  #   gateway:
+  #   nameservers:
 
 opennebula_gluster_volume_name: opennebula

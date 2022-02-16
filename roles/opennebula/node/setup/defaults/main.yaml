@@ -5,6 +5,26 @@ opennebula_node_datastore_glusterfs_mount_path:
 opennebula_datastore_lvm_devices: []
 opennebula_datastore_system_id:
 
+opennebula_network_links: []
+  # - interface:
+  #   bridge:
+  #     name:
+  #     parameters:
+  #       stp: false
+  #       forward_delay:
+  #   addresses:
+  #   gateway:
+  #   nameservers:
+  # - interface:
+  #   bridge:
+  #     name:
+  #     parameters:
+  #       stp: false
+  #       forward_delay:
+  #   addresses:
+  #   gateway:
+  #   nameservers:
+
 opennebula_public_interface_name:
 opennebula_public_bridge_name:
 opennebula_public_addresses: []
