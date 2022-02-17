@@ -26,6 +26,10 @@
   set_fact:
     _target_hosts: "{{ (_target_hosts | default({})) | combine({item.mount.path: (query('inventory_hostnames', item.hosts) | random)}) }}"
   loop: "{{ glusterfs_mounts }}"
+- name: check if the directory is already mounted properly
+  set_fact:
+    _already_mounted: "{{ (_already_mounted | default({})) | combine({item.mount.path: (ansible_mounts | selectattr('fstype', 'equalto', 'fuse.glusterfs') | selectattr('device', 'match', '.+:\\/' + item.volume) | list | length > 0 ) }) }}"
+  loop: "{{ glusterfs_mounts }}"
 - name: mount the mountpoint
   mount:
     name: "{{ item.mount.path }}"
@@ -33,4 +37,5 @@
     fstype: glusterfs
     opts: "defaults,_netdev,noauto,x-systemd.automount"
     state: mounted
+  when: _already_mounted[item.mount.path] == false
   loop: "{{ glusterfs_mounts }}"
