@@ -23,7 +23,7 @@
     _sources: "{{
       _sources |
       union(
-        query('inventory_hostnames', (_source_hosts | default([inventory_hostname], true))) |
+        query('inventory_hostnames', *(_source_hosts | default([inventory_hostname], true))) |
         map('extract', hostvars) |
         map(attribute='ansible_host', default='') |
         difference([ansible_host, ''])
