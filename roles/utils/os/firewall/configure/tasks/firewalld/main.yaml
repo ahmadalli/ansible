@@ -13,11 +13,13 @@
 - name: disable ufw
   community.general.ufw:
     state: disabled
+  ignore_errors: true
 - name: disable ufw service
   ansible.builtin.systemd:
     name: ufw
     enabled: false
     state: stopped
+  ignore_errors: true
 
 - name: reset firewalld
   include_tasks: reset.yaml
