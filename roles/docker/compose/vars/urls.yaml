@@ -1,6 +1,6 @@
 # yaml-language-server: $schema=none
 
-_docker_composer_file_ending: "{{ansible_system}}-{{ansible_userspace_architecture}}"
+_docker_composer_file_ending: "{{ansible_system}}-{{ansible_architecture}}"
 _docker_composer_v2_0_0_file_ending: "{{ ansible_system | lower }}-{{ 'amd64'  if ansible_architecture | lower == 'x86_64' else ansible_architecture }}"
 _docker_composer_file_name: docker-compose-{{ _docker_composer_v2_0_0_file_ending if (docker_compose_version | default('latest', true) == '2.0.0') else _docker_composer_file_ending }}
 _docker_compose_download_url: https://github.com/docker/compose/releases/{{ 'latest/download' if docker_compose_version | default('latest', true) == 'latest' else 'download/' + docker_compose_version }}/{{ _docker_composer_file_name }}
