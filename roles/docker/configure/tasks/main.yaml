@@ -10,6 +10,7 @@
       log-opts: "{{ docker_daemon_configs_log_opts | default({}, true) }}"
       features:
         buildkit: "{{ docker_daemon_configs_features_buildkit | default(false, true) | bool }}"
+      data-root: "{{ docker_daemon_configs_data_root | default('/var/lib/docker', true) }}"
   tags:
     - facts
 - name: create docker configs directory
