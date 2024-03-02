@@ -41,6 +41,9 @@
     _sources: "{{ _sources | map('ansible.netcommon.ipsubnet') }}"
   tags:
     - facts
+- name: define _redundant_sources
+  set_fact:
+    _redundant_sources: []
 - name: generate redundant sources list
   set_fact:
     _redundant_sources: "{{ _redundant_sources | default([], true) | union(_sources | ansible.netcommon.ipaddr(item) | difference([item])) | unique }}"
